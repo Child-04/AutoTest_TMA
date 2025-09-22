@@ -96,7 +96,5 @@ public class AdminTable_GetUser extends BaseTest {
         for (Map<String, String> row : tableData) {
             System.out.println(row);
         }
-        page.waitForTimeout(30000);
-
     }
 }
