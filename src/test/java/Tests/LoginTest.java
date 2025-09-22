@@ -72,5 +72,7 @@ public class LoginTest extends BaseTest {
 //
 //        String errorText = page.textContent("//span[contains(@class,'oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message')]");
 //        Assert.assertEquals(errorText.trim(), "Required");
+
+
 //    }
 }
