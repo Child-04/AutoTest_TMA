@@ -2,7 +2,7 @@
 <suite name="Playwright Suite">
     <test name="Playwright Tests">
         <classes>
-            <class name="Pages.LoginPage"/>
+            <class name="Tests.LoginTest"/>
         </classes>
     </test>
 </suite>

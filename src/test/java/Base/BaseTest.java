@@ -1,7 +1,8 @@
 package Base;
+
 import com.microsoft.playwright.*;
-import org.testng.Assert;
 import org.testng.annotations.*;
+
 public class BaseTest {
     protected Playwright playwright;
     protected Browser browser;
@@ -14,7 +15,16 @@ public class BaseTest {
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
         context = browser.newContext();
         page = context.newPage();
+
+        page.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+
+        page.locator("//input[@name='username']").fill("Admin");
+        page.locator("//input[@name='password']").fill("admin123");
+        page.locator("//button[@type='submit']").click();
+
+        page.waitForURL("**/dashboard/index");
     }
+
 
     @AfterClass
     public void teardown() {

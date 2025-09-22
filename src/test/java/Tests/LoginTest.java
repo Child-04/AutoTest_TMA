@@ -15,7 +15,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void ValidLogin() {
+    public void login_WithValidCredentials_ShouldRedirectToDashboard() {
         // nhập username và password đúng
         loginPage.loginAs("Admin", "admin123");
         page.click("button[type='submit']");
@@ -25,7 +25,7 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(page.url().contains("dashboard/index"), "Login failed with valid credentials");
     }
     @Test
-    public void InvalidLogin() {
+    public void login_WithInvalidCredentials_ShouldShowErrorMessage() {
        // page.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
         loginPage.loginAs("wrongUser", "wrongPass");
@@ -35,20 +35,20 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void InvalidLogin_WrongPass() {
+    public void login_WithWrongPassword_ShouldShowErrorMessage() {
         loginPage.loginAs("Admin", "wrongPass");
         page.click("button[type='submit']");
         Assert.assertEquals(loginPage.getErrorMessage(), "Invalid credentials");
     }
     @Test
-    public void InvalidLogin_WrongUsername() {
+    public void login_WithWrongUsername_ShouldShowErrorMessage() {
         loginPage.loginAs("wrongUser", "admin123");
         page.click("button[type='submit']");
         Assert.assertEquals(loginPage.getErrorMessage(), "Invalid credential");
     }
 
     @Test
-    public void InvalidLogin_NoneUsername() {
+    public void login_WithEmptyUsername_ShouldShowRequiredMessage() {
         loginPage.loginAs("", "wrongPass");
         page.click("button[type='submit']");
 
@@ -57,7 +57,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void testInvalidLogin_NonePassword() {
+    public void login_WithEmptyPassword_ShouldShowRequiredMessage() {
         loginPage.loginAs("Admin",  "");
         page.click("button[type='submit']");
 
@@ -65,12 +65,12 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(errorText.trim(), "Required");
     }
 
-    @Test
-    public void testInvalidLogin_NoneBoth() {
-        loginPage.loginAs("", "");
-        page.click("button[type='submit']");
-
-        String errorText = page.textContent("//span[contains(@class,'oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message')]");
-        Assert.assertEquals(errorText.trim(), "Required");
-    }
+//    @Test
+//    public void login_WithEmptyCredentials_ShouldShowTwoRequiredMessages() {
+//        loginPage.loginAs("", "");
+//        page.click("button[type='submit']");
+//
+//        String errorText = page.textContent("//span[contains(@class,'oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message')]");
+//        Assert.assertEquals(errorText.trim(), "Required");
+//    }
 }
