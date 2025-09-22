@@ -79,7 +79,7 @@ public class AdminTable_GetUser extends BaseTest {
 
         List<Map<String, String>> tableData = new ArrayList<>();
 
-        for (int i = 0; i <= rowCount; i++) {
+        for (int i = 0; i < rowCount; i++) {
             Locator row = rows.nth(i);
             Locator cells = row.locator("//div[@role='cell']");
             int cellCount = cells.count();
