@@ -8,71 +8,45 @@ public class LoginTest extends BaseTest {
     private LoginPage loginPage;
 
     @BeforeMethod
-    public void navigateToLogin() {
-        // mở trang login trước mỗi test
-        page.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+    public void setUpTest() {
         loginPage = new LoginPage(page);
+        page.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        // Chờ input username xuất hiện
+        //page.waitForSelector("//input[@name='username']");
     }
-
     @Test
-    public void login_WithValidCredentials_ShouldRedirectToDashboard() {
-        // nhập username và password đúng
+    public void testLoginSuccess() {
         loginPage.loginAs("Admin", "admin123");
-        page.click("button[type='submit']");
-
-        // kiểm tra đã chuyển hướng sang dashboard
         page.waitForURL("**/dashboard/index");
-        Assert.assertTrue(page.url().contains("dashboard/index"), "Login failed with valid credentials");
-    }
-    @Test
-    public void login_WithInvalidCredentials_ShouldShowErrorMessage() {
-       // page.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-
-        loginPage.loginAs("wrongUser", "wrongPass");
-        page.click("button[type='submit']");
-
-        Assert.assertEquals(loginPage.getErrorMessage(), "Invalid credentials");
+        Assert.assertTrue(loginPage.isLoginSuccess(), "Login failed!");
     }
 
-    @Test
-    public void login_WithWrongPassword_ShouldShowErrorMessage() {
-        loginPage.loginAs("Admin", "wrongPass");
-        page.click("button[type='submit']");
-        Assert.assertEquals(loginPage.getErrorMessage(), "Invalid credentials");
+    @DataProvider(name = "loginData")
+    public Object[][] loginData() {
+        return new Object[][]{
+                {"wrongUser", "wrongPass", "Invalid credentials", "invalid"},
+                {"", "admin123", "Required", "emptyUser"},
+                {"Admin", "", "Required", "emptyPass"},
+                {"", "", "Required", "emptyBoth"}
+        };
     }
-    @Test
-    public void login_WithWrongUsername_ShouldShowErrorMessage() {
-        loginPage.loginAs("wrongUser", "admin123");
-        page.click("button[type='submit']");
-        Assert.assertEquals(loginPage.getErrorMessage(), "Invalid credential");
+    @Test(dataProvider = "loginData")
+    public void InvalidtestLogin(String username, String password, String expectedResult, String caseType) {
+        loginPage.loginAs(username, password);
+        switch (caseType) {
+            case "invalid":
+                Assert.assertEquals(loginPage.getInvalidError(), expectedResult, "Invalid login message!");
+                break;
+            case "emptyUser":
+                Assert.assertEquals(loginPage.getUserRequiredError(), expectedResult, "Wrong message Required in Username!");
+                break;
+            case "emptyPass":
+                Assert.assertEquals(loginPage.getPassRequiredError(), expectedResult, "Wrong message Required in Password!");
+                break;
+            case "emptyBoth":
+                Assert.assertEquals(loginPage.getUserRequiredError(), expectedResult, "Wrong message Required in Username!");
+                Assert.assertEquals(loginPage.getPassRequiredError(), expectedResult, "Wrong message Required in Password!");
+                break;
+        }
     }
-
-    @Test
-    public void login_WithEmptyUsername_ShouldShowRequiredMessage() {
-        loginPage.loginAs("", "wrongPass");
-        page.click("button[type='submit']");
-
-       String errorText = page.textContent("//span[contains(@class,'oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message')]");
-       Assert.assertEquals(errorText.trim(), "Required");
-    }
-
-    @Test
-    public void login_WithEmptyPassword_ShouldShowRequiredMessage() {
-        loginPage.loginAs("Admin",  "");
-        page.click("button[type='submit']");
-
-        String errorText = page.textContent("//span[contains(@class,'oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message')]");
-        Assert.assertEquals(errorText.trim(), "Required");
-    }
-
-//    @Test
-//    public void login_WithEmptyCredentials_ShouldShowTwoRequiredMessages() {
-//        loginPage.loginAs("", "");
-//        page.click("button[type='submit']");
-//
-//        String errorText = page.textContent("//span[contains(@class,'oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message')]");
-//        Assert.assertEquals(errorText.trim(), "Required");
-
-
-//    }
 }

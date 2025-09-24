@@ -18,11 +18,6 @@ public class BaseTest {
 
         page.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
-        page.locator("//input[@name='username']").fill("Admin");
-        page.locator("//input[@name='password']").fill("admin123");
-        page.locator("//button[@type='submit']").click();
-
-        page.waitForURL("**/dashboard/index");
     }
 
 
