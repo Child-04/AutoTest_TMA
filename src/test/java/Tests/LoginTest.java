@@ -3,6 +3,7 @@ import Base.BaseTest;
 import Pages.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 public class LoginTest extends BaseTest {
     private LoginPage loginPage;
@@ -21,32 +22,35 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(loginPage.isLoginSuccess(), "Login failed!");
     }
 
-    @DataProvider(name = "loginData")
-    public Object[][] loginData() {
-        return new Object[][]{
-                {"wrongUser", "wrongPass", "Invalid credentials", "invalid"},
-                {"", "admin123", "Required", "emptyUser"},
-                {"Admin", "", "Required", "emptyPass"},
-                {"", "", "Required", "emptyBoth"}
-        };
+    @Test
+    public void login_WithWrongUsername_ShouldShowErrorMessage() {
+        loginPage.loginAs("wrongUser", "admin123");
+        page.click("button[type='submit']");
+        Assert.assertEquals(loginPage.getInvalidError(), "Invalid credential");
     }
-    @Test(dataProvider = "loginData")
-    public void InvalidtestLogin(String username, String password, String expectedResult, String caseType) {
-        loginPage.loginAs(username, password);
-        switch (caseType) {
-            case "invalid":
-                Assert.assertEquals(loginPage.getInvalidError(), expectedResult, "Invalid login message!");
-                break;
-            case "emptyUser":
-                Assert.assertEquals(loginPage.getUserRequiredError(), expectedResult, "Wrong message Required in Username!");
-                break;
-            case "emptyPass":
-                Assert.assertEquals(loginPage.getPassRequiredError(), expectedResult, "Wrong message Required in Password!");
-                break;
-            case "emptyBoth":
-                Assert.assertEquals(loginPage.getUserRequiredError(), expectedResult, "Wrong message Required in Username!");
-                Assert.assertEquals(loginPage.getPassRequiredError(), expectedResult, "Wrong message Required in Password!");
-                break;
-        }
+
+    @Test
+    public void login_WithEmptyUsername_ShouldShowRequiredMessage() {
+        loginPage.loginAs("", "wrongPass");
+        page.click("button[type='submit']");
+
+
+        Assert.assertEquals(loginPage.getUserRequiredError(), "Required");
     }
+
+    @Test
+    public void login_WithEmptyPassword_ShouldShowRequiredMessage() {
+        loginPage.loginAs("Admin",  "");
+        page.click("button[type='submit']");
+
+        Assert.assertEquals(loginPage.getPassRequiredError(), "Required");
+    }
+
+    @Test
+    public void login_WithEmptyCredentials_ShouldShowTwoRequiredMessages() {
+        loginPage.loginAs("", "");
+        Assert.assertEquals(loginPage.getUserRequiredError().trim(), "Required");
+        Assert.assertEquals(loginPage.getPassRequiredError().trim(), "Required");
+    }
+
 }

@@ -1,18 +1,15 @@
 package Tests;
 
-import Base.BaseTest;
 import Base.LoggedInBaseTest;
-import Pages.AdminPage;
-import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Page;
+import Pages.AdminTablePage;
 import org.testng.annotations.Test;
 
 import java.util.*;
 
-public class AdminTable_GetUser extends LoggedInBaseTest {
+public class AdminTable_GetUserTest extends LoggedInBaseTest {
     @Test
     public void test_GetUserTable() {
-        AdminPage adminPage = new AdminPage(page);
+        AdminTablePage adminPage = new AdminTablePage(page);
         adminPage.openAdminPage();
         // Call method in AdminPage
         List<Map<String, String>> tableData = adminPage.getUserTableData();
