@@ -1,6 +1,7 @@
 package Base;
 
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 public class LoggedInBaseTest extends BaseTest{
     @BeforeClass
