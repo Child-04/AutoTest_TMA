@@ -1,6 +1,7 @@
 package Base;
 
 import com.microsoft.playwright.*;
+import io.qameta.allure.Step;
 import org.testng.annotations.*;
 
 public class BaseTest {
@@ -15,8 +16,6 @@ public class BaseTest {
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
         context = browser.newContext();
         page = context.newPage();
-
-        page.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
     }
 
