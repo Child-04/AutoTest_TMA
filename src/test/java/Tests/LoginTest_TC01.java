@@ -5,9 +5,8 @@ import io.qameta.allure.Step;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-public class LoginTest extends BaseTest {
+public class LoginTest_TC01 extends BaseTest {
     private LoginPage loginPage;
 
     @BeforeMethod

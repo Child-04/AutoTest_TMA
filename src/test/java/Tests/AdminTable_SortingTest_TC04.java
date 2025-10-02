@@ -1,14 +1,13 @@
 package Tests;
 
 import Base.LoggedInBaseTest;
-import Pages.AdminPage_01;
 import Pages.AdminPage_02;
 import com.microsoft.playwright.Locator;
 import jdk.jfr.Description;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class AdminTable_SortingTest_02 extends LoggedInBaseTest {
+public class AdminTable_SortingTest_TC04 extends LoggedInBaseTest {
 
     private AdminPage_02 adminPage;
     @BeforeMethod
