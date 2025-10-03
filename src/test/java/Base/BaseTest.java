@@ -22,8 +22,8 @@ public class BaseTest {
 
     @AfterClass
     public void teardown() {
-//        context.close();
-//       // browser.close();
-//        playwright.close();
+        context.close();
+        browser.close();
+        playwright.close();
     }
 }

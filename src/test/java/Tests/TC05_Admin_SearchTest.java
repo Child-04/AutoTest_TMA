@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class Admin_SearchTest_TC05 extends LoggedInBaseTest {
+public class TC05_Admin_SearchTest extends LoggedInBaseTest {
     private AdminPage_Search_03 adminPage;
     @BeforeMethod
     public void goToAdminPage() {

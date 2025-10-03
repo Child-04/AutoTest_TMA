@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 import java.util.*;
 
-public class AdminTable_GetUserTest_TC02 extends LoggedInBaseTest {
+public class TC02_AdminTable_GetUserTest extends LoggedInBaseTest {
     @Test
     public void TC06_test_GetUserTable() {
         AdminPage_01 adminPage = new AdminPage_01(page);

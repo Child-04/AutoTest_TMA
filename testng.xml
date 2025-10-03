@@ -2,7 +2,8 @@
 <suite name="Playwright Suite">
     <test name="Playwright Tests">
         <classes>
-            <class name="Tests.Admin_SearchTest_TC05"/>
+<!--            <class name="Tests.TC05_Admin_SearchTest"/>-->
+            <class name="Tests.TC06_PaginationTest"/>
         </classes>
     </test>
 </suite>
