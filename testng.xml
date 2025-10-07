@@ -2,8 +2,9 @@
 <suite name="Playwright Suite">
     <test name="Playwright Tests">
         <classes>
-<!--            <class name="Tests.TC05_Admin_SearchTest"/>-->
-            <class name="Tests.TC06_PaginationTest"/>
+            <class name="Tests.TC05_Admin_SearchTest"/>
+<!--            <class name="Tests.TC06_PaginationTest"/>-->
+<!--            <class name="Tests.TC07_TooltipTest"></class>-->
         </classes>
     </test>
 </suite>

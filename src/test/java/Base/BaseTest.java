@@ -1,7 +1,7 @@
 package Base;
 
+import Utils.TestListener;
 import com.microsoft.playwright.*;
-import io.qameta.allure.Step;
 import org.testng.annotations.*;
 
 public class BaseTest {
@@ -22,8 +22,6 @@ public class BaseTest {
 
     @AfterClass
     public void teardown() {
-        context.close();
-        browser.close();
-        playwright.close();
+        if (page != null) page.context().browser().close();
     }
 }

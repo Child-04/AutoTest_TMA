@@ -9,7 +9,6 @@ public class PaginationPage {
     private final Page page;
 
     private final String tableRows = "//table//tbody/tr";
-    private final String firstCellOfRow = "//table/tbody/tr[1]";
     private final String nextBTN = "//button[text()='Next']";
     private final String prevBTN = "//button[text()='Previous']";
     private final String firstBTN = "//button[text()='<<']";

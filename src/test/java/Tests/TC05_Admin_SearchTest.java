@@ -2,15 +2,18 @@ package Tests;
 
 import Base.LoggedInBaseTest;
 import Pages.AdminPage_Search_03;
+import Utils.ScreenshotUtil;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TC05_Admin_SearchTest extends LoggedInBaseTest {
     private AdminPage_Search_03 adminPage;
+    private Utils.ScreenshotUtil screenshot;
     @BeforeMethod
     public void goToAdminPage() {
         adminPage = new AdminPage_Search_03(page);
+        screenshot = new ScreenshotUtil(page);
         adminPage.openAdminPage();
     }
 
@@ -22,6 +25,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
                 adminPage.isRecordFound("Admin"),
                 "Expected user 'Admin' should be displayed in search results."
         );
+        screenshot.takeScreenshot("testSearch_ByValidUsername");
     }
 
     @Test(priority = 2, description = "Verify search by invalid username shows 'No Records Found' message")
@@ -36,14 +40,11 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
                 adminPage.isNoRecordBoxDisplayed(),
                 "Expected 'No Records Found' toast should be displayed."
         );
+        screenshot.takeScreenshot("testSearch_ByInvalidUsername");
     }
 
     @Test(priority = 3, description = "Search with all empty fields - should return full user list")
     public void testSearch_ByAllEmptyFields() {
-        // Clear input and dropdown
-        adminPage.enterUsername("");       // Username trống
-        adminPage.enterEmployeeName("");   // Employee Name trống
-
         adminPage.clickSearch();
 
         // check record display
@@ -51,6 +52,9 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
                 adminPage.isRecordDisplayed(),
                 "Expected system to display full user list when all search fields are empty."
         );
+        page.waitForTimeout(2000);
+
+        screenshot.takeScreenshot("testSearch_ByAllEmptyFields");
     }
 
     @Test(priority = 4, description = "Search with User Role = Admin")
@@ -59,6 +63,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
         adminPage.clickSearch();
         Assert.assertTrue(adminPage.getNumberOfRecords() > 0,
                 "Expected records with User Role = Admin");
+        screenshot.takeScreenshot("testSearchByUserRole");
     }
 
     @Test(priority = 6, description = "Search with Username + User Role + Status")
@@ -69,6 +74,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
         adminPage.clickSearch();
         Assert.assertTrue(adminPage.isRecordFound("Admin"),
                 "Expected records that match Username = Admin, User Role = Admin, Status = Enabled");
+    screenshot.takeScreenshot("testSearchByMultipleFilters");
     }
 
 

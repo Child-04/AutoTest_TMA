@@ -6,7 +6,7 @@ import jdk.jfr.Description;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class TC03_AdminTable_SortingTest extends LoggedInBaseTest {
+public class TC03_AdminTable01_SortingTest extends LoggedInBaseTest {
 
     private AdminPage_01 adminPage;
     @BeforeMethod

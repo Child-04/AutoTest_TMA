@@ -7,9 +7,11 @@ import jdk.jfr.Description;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class TC04_AdminTable_SortingTest extends LoggedInBaseTest {
+public class TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
 
     private AdminPage_02 adminPage;
+    private Utils.ScreenshotUtil screenshot;
+
     @BeforeMethod
     public void goToAdminPage() {
         adminPage = new AdminPage_02(page);
@@ -38,6 +40,7 @@ public class TC04_AdminTable_SortingTest extends LoggedInBaseTest {
         String columnName = "Employee Name";
         Locator columnLocator = adminPage.getColumnLocatorByName(columnName);
         adminPage.VerifySort(columnName, columnLocator, "asc");
+        screenshot.takeScreenshot("sortEmployeeName ");
     }
     @Test(description = "Verify that sorting of Employee Name in descending order")
     @Description("System should sort correctly the Employee Name in descending order")
