@@ -2,10 +2,8 @@ package Pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
-import org.testng.Assert;
 
-import java.util.*;
-public class AdminPage_Search_03 {
+public class P05_AdminPage_Search {
     private Page page;
     // Locators
     private String adminMenu = "//span[text()='Admin']";
@@ -19,7 +17,7 @@ public class AdminPage_Search_03 {
     private final String resultRows = "//div[@class='oxd-table-body']//div[@role='row']";
     private final String noRecordsBox = "//div[contains(@class,'oxd-toast-content oxd-toast-content--info')]";
 
-    public AdminPage_Search_03(Page page) {
+    public P05_AdminPage_Search(Page page) {
         this.page = page;
     }
 

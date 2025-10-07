@@ -7,9 +7,8 @@ import org.testng.Assert;
 
 import java.util.*;
 
-public class AdminPage_01_StringParameter {
-    private final Page page;
-
+public class P04_AdminPage_02_StringandLocatorParameter {
+    private Page page;
     // Locators (Locator object thay vì String)
     private final Locator adminMenu;
     private final Locator headerSelector;
@@ -18,7 +17,7 @@ public class AdminPage_01_StringParameter {
     private final Locator tableBody;
 
     // Constructor
-    public AdminPage_01_StringParameter(Page page) {
+    public P04_AdminPage_02_StringandLocatorParameter(Page page) {
         this.page = page;
         this.adminMenu = page.locator("//span[text()='Admin']");
         this.headerSelector = page.locator("//div[@role='row']");
@@ -62,54 +61,72 @@ public class AdminPage_01_StringParameter {
         return tableData;
     }
 
-    @Step("Click icon sort next to '{columnName}' and select '{sortType}' ")
-    public void clickSortAndSelectType(String columnName, String sortType) {
-        int colCount = headerSelector.count();
+    public Locator getColumnLocatorByName(String columnName) {
+        Locator headers = headerSelector;
+        int colCount = headers.count();
         for (int i = 1; i < colCount - 1; i++) {
-            String headerText = headerSelector.nth(i).innerText().trim();
+            String headerText = headers.nth(i).innerText().trim();
             if (headerText.equalsIgnoreCase(columnName)) {
-                Locator sortIcon = headerSelector.nth(i).locator(".oxd-table-header-sort-icon");
-                sortIcon.click();
-                Locator dropdown = headerSelector.nth(i).locator(".oxd-table-header-sort-dropdown");
-                dropdown.locator("li:has-text('" + (sortType.equals("asc") ? "Ascending" : "Descending") + "')").click();
-                page.waitForTimeout(3000);
-                return;
+                return headers.nth(i);
             }
         }
         throw new RuntimeException("No column found: " + columnName);
     }
 
+    @Step("Click icon sort next to '{columnName}' and select '{sortType}' ")
+    public void clickSortAndSelectType(String columnName, Locator columnLocator, String sortType) {
+        Locator sortIcon = columnLocator.locator(".oxd-table-header-sort-icon");
+        sortIcon.click();
+        Locator dropdown = columnLocator.locator(".oxd-table-header-sort-dropdown");
+        dropdown.locator("li:has-text('" + (sortType.equals("asc") ? "Ascending" : "Descending") + "')").click();
+        page.waitForTimeout(3000);
+    }
+
     // Get value on each column
-    public List<String> getColumnData(String columnName) {
-        List<Map<String, String>> tableData = getUserTableData();
+    public List<String> getColumnData(Locator columnLocator) {
+        Locator headers = headerSelector;
+        int colCount = headers.count();
+        int targetIndex = -1;
+        for (int i = 1; i < colCount - 1; i++) {
+            if (headers.nth(i).equals(columnLocator)) {
+                targetIndex = i;
+                break;
+            }
+        }
+        if (targetIndex == -1) throw new RuntimeException("Column locator not found in header");
+
+        Locator rows = rowSelector;
+        int rowCount = rows.count();
         List<String> columnData = new ArrayList<>();
-        for (Map<String, String> row : tableData) {
-            columnData.add(row.get(columnName));
+        for (int i = 0; i < rowCount; i++) {
+            Locator cells = rows.nth(i).locator(cellSelector);
+            String cellText = cells.nth(targetIndex).innerText().trim();
+            columnData.add(cellText);
         }
         return columnData;
     }
 
-    // Print result
+    //Print result
     @Step("Verify column '{columnName}' is sorted in '{sortType}' order")
-    public void VerifySort(String columnName, String sortType) {
+    public void VerifySort(String columnName, Locator columnLocator, String sortType) {
+        clickSortAndSelectType(columnName, columnLocator, sortType);
 
-        clickSortAndSelectType(columnName, sortType);
+        List<String> actualData = getColumnData(columnLocator);
+        List<String> expectedData = new ArrayList<>(actualData);
 
-        List<String> actualData = getColumnData(columnName); // List value UI
-        List<String> expectedData = new ArrayList<>(actualData); // List value expected
-        if (sortType.equals("asc")) {
+        if (sortType.equalsIgnoreCase("asc")) {
             Collections.sort(expectedData);
         } else {
             Collections.sort(expectedData, Collections.reverseOrder());
         }
 
-        System.out.println("=== Actual Data (" + columnName + " - " + sortType.toUpperCase() + ") ===");
+        System.out.println("=== Actual Data (" + columnName + ") ===");
         actualData.forEach(System.out::println);
 
-        System.out.println("=== Expected Data (" + columnName + " - " + sortType.toUpperCase() + ") ===");
+        System.out.println("=== Expected Data (" + columnName + ") ===");
         expectedData.forEach(System.out::println);
 
         Assert.assertEquals(actualData, expectedData,
-                "Column " + columnName + " has not been sorted " + sortType.toUpperCase() + " correctly");
+                "Column '" + columnName + "' has not been sorted " + sortType.toUpperCase() + " correctly");
     }
 }

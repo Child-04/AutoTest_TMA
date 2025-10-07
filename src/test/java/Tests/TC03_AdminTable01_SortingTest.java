@@ -1,7 +1,7 @@
 package Tests;
 
 import Base.LoggedInBaseTest;
-import Pages.AdminPage_01_StringParameter;
+import Pages.P02_AdminPage_01_StringParameter;
 import jdk.jfr.Description;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -10,10 +10,10 @@ import static Data.TestData.*;
 
 public class TC03_AdminTable01_SortingTest extends LoggedInBaseTest {
 
-    private AdminPage_01_StringParameter adminPage;
+    private P02_AdminPage_01_StringParameter adminPage;
     @BeforeMethod
     public void goToAdminPage() {
-        adminPage = new AdminPage_01_StringParameter(page);
+        adminPage = new P02_AdminPage_01_StringParameter(page);
         adminPage.openAdminPage();
     }
     @Test(description = "Verify sorting of Username column in ascending order")

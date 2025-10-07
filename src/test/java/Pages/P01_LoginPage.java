@@ -8,7 +8,7 @@ import io.qameta.allure.Step;
 
 @Epic("Authentication")
 @Feature("Login Feature")
-public class LoginPage {
+public class P01_LoginPage {
     private final Page page;
 
     // Locators
@@ -20,7 +20,7 @@ public class LoginPage {
     private final Locator passwordRequiredMessage;
 
     // Constructor
-    public LoginPage(Page page) {
+    public P01_LoginPage(Page page) {
         this.page = page;
         this.usernameField = page.locator("//input[@name='username']");
         this.passwordField = page.locator("//input[@name='password']");

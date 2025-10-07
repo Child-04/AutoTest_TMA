@@ -1,18 +1,18 @@
 package Tests;
 
 import Base.LoggedInBaseTest;
-import Pages.AdminPage_Search_03;
+import Pages.P05_AdminPage_Search;
 import Utils.ScreenshotUtil;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TC05_Admin_SearchTest extends LoggedInBaseTest {
-    private AdminPage_Search_03 adminPage;
+    private P05_AdminPage_Search adminPage;
     private Utils.ScreenshotUtil screenshot;
     @BeforeMethod
     public void goToAdminPage() {
-        adminPage = new AdminPage_Search_03(page);
+        adminPage = new P05_AdminPage_Search(page);
         screenshot = new ScreenshotUtil(page);
         adminPage.openAdminPage();
     }

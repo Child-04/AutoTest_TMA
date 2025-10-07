@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class External_SortDatePage {
+public class P08_External_SortDatePage {
     private final Page page;
     private final Locator Datecolumn;
     private final Locator ToggleSort;
@@ -18,7 +18,7 @@ public class External_SortDatePage {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public External_SortDatePage(Page page) {
+    public P08_External_SortDatePage(Page page) {
         this.page = page;
         this.Datecolumn = page.locator("//th[contains(normalize-space(),'Date of Birth')]");
         this.ToggleSort = page.locator("//th[contains(normalize-space(),'Date of Birth')]//span");

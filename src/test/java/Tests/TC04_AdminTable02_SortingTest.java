@@ -1,7 +1,7 @@
 package Tests;
 
 import Base.LoggedInBaseTest;
-import Pages.AdminPage_02_StringandLocatorParameter;
+import Pages.P04_AdminPage_02_StringandLocatorParameter;
 import com.microsoft.playwright.Locator;
 import jdk.jfr.Description;
 import org.testng.annotations.BeforeMethod;
@@ -11,12 +11,12 @@ import static Data.TestData.*;
 
 public class  TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
 
-    private AdminPage_02_StringandLocatorParameter adminPage;
+    private P04_AdminPage_02_StringandLocatorParameter adminPage;
     private Utils.ScreenshotUtil screenshot;
 
     @BeforeMethod
     public void goToAdminPage() {
-        adminPage = new AdminPage_02_StringandLocatorParameter(page);
+        adminPage = new P04_AdminPage_02_StringandLocatorParameter(page);
         adminPage.openAdminPage();
     }
 

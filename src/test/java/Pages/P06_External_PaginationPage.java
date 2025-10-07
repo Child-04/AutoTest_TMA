@@ -6,7 +6,7 @@ import io.qameta.allure.Step;
 
 import java.util.List;
 
-public class External_PaginationPage {
+public class P06_External_PaginationPage {
     private final Page page;
 
     private final Locator tableRows;
@@ -18,7 +18,7 @@ public class External_PaginationPage {
     private final Locator pageSizeDropdown;
     private final Locator pageInfoText; // use for "Page 1 of 20"
 
-    public External_PaginationPage(Page page) {
+    public P06_External_PaginationPage(Page page) {
         this.page = page;
 
         // Khởi tạo locators

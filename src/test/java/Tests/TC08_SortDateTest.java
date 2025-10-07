@@ -1,7 +1,7 @@
 package Tests;
 
 import Base.BaseTest;
-import Pages.External_SortDatePage;
+import Pages.P08_External_SortDatePage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -9,14 +9,14 @@ import org.testng.annotations.Test;
 import java.time.LocalDate;
 import java.util.List;
 
-public class TC8_SortDateTest extends BaseTest {
+public class TC08_SortDateTest extends BaseTest {
 
-    private External_SortDatePage sortPage;
+    private P08_External_SortDatePage sortPage;
 
     @BeforeMethod
     public void openPage() {
         page.navigate("https://utkarsh-react-table-demo.netlify.app/sort");
-        sortPage = new External_SortDatePage(page);
+        sortPage = new P08_External_SortDatePage(page);
     }
 
     @Test(description = "Verify Date of Birth column sorting (ascending, descending, reset)")
