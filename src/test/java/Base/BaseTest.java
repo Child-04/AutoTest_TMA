@@ -1,7 +1,9 @@
 package Base;
+
+import Utils.TestListener;
 import com.microsoft.playwright.*;
-import org.testng.Assert;
 import org.testng.annotations.*;
+
 public class BaseTest {
     protected Playwright playwright;
     protected Browser browser;
@@ -14,12 +16,12 @@ public class BaseTest {
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
         context = browser.newContext();
         page = context.newPage();
+
     }
+
 
     @AfterClass
     public void teardown() {
-        context.close();
-        browser.close();
-        playwright.close();
+        if (page != null) page.context().browser().close();
     }
 }
