@@ -7,34 +7,38 @@ import org.testng.Assert;
 
 import java.util.*;
 
-public class AdminPage_02 {
+public class AdminPage_02_StringandLocatorParameter {
     private Page page;
-    // Locators
-    private String adminMenu = "//span[text()='Admin']";
-    private final String headerSelector = "//div[@class='oxd-table-header']//div[@role='columnheader']";
-    private final String rowSelector = "//div[@class='oxd-table-body']/div[@class='oxd-table-card']";
-    private final String cellSelector = "div[role='cell']";
+    // Locators (Locator object thay vì String)
+    private final Locator adminMenu;
+    private final Locator headerSelector;
+    private final Locator rowSelector;
+    private final Locator cellSelector;
+    private final Locator tableBody;
 
     // Constructor
-    public AdminPage_02(Page page) {
+    public AdminPage_02_StringandLocatorParameter(Page page) {
         this.page = page;
+        this.adminMenu = page.locator("//span[text()='Admin']");
+        this.headerSelector = page.locator("//div[@role='row']");
+        this.rowSelector = page.locator("//div[@class='oxd-table-card']");
+        this.cellSelector = page.locator("//div[@role='cell']");
+        this.tableBody = page.locator("//div[@class='oxd-table-body']");
     }
 
     @Step("Open Admin Page")
-    // Action: click Admin menu
     public void openAdminPage() {
-        page.locator(adminMenu).click();
+        adminMenu.click();
         page.waitForURL("**/admin/viewSystemUsers");
-        page.waitForSelector("//div[@class='oxd-table-body']");
+        tableBody.waitFor();
     }
 
     // Get headers, skip checkbox and actions
     public List<String> getTableHeaders() {
-        Locator headerCells = page.locator(headerSelector);
-        int colCount = headerCells.count();
+        int colCount = headerSelector.count();
         List<String> headers = new ArrayList<>();
         for (int i = 1; i < colCount - 1; i++) { // bỏ checkbox đầu và Actions cuối
-            headers.add(headerCells.nth(i).innerText().trim());
+            headers.add(headerSelector.nth(i).innerText().trim());
         }
         return headers;
     }
@@ -42,11 +46,10 @@ public class AdminPage_02 {
     // Get table data as List<Map>
     public List<Map<String, String>> getUserTableData() {
         List<String> headers = getTableHeaders();
-        Locator rows = page.locator(rowSelector);
-        int rowCount = rows.count();
+        int rowCount = rowSelector.count();
         List<Map<String, String>> tableData = new ArrayList<>();
         for (int i = 0; i < rowCount; i++) {
-            Locator cells = rows.nth(i).locator(cellSelector);
+            Locator cells = rowSelector.nth(i).locator(cellSelector);
             int cellCount = cells.count();
             Map<String, String> rowMap = new LinkedHashMap<>();
             for (int j = 1; j < Math.min(cellCount - 1, headers.size() + 1); j++) {
@@ -59,7 +62,7 @@ public class AdminPage_02 {
     }
 
     public Locator getColumnLocatorByName(String columnName) {
-        Locator headers = page.locator(headerSelector);
+        Locator headers = headerSelector;
         int colCount = headers.count();
         for (int i = 1; i < colCount - 1; i++) {
             String headerText = headers.nth(i).innerText().trim();
@@ -81,7 +84,7 @@ public class AdminPage_02 {
 
     // Get value on each column
     public List<String> getColumnData(Locator columnLocator) {
-        Locator headers = page.locator(headerSelector);
+        Locator headers = headerSelector;
         int colCount = headers.count();
         int targetIndex = -1;
         for (int i = 1; i < colCount - 1; i++) {
@@ -92,7 +95,7 @@ public class AdminPage_02 {
         }
         if (targetIndex == -1) throw new RuntimeException("Column locator not found in header");
 
-        Locator rows = page.locator(rowSelector);
+        Locator rows = rowSelector;
         int rowCount = rows.count();
         List<String> columnData = new ArrayList<>();
         for (int i = 0; i < rowCount; i++) {

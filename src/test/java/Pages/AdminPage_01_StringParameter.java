@@ -7,34 +7,39 @@ import org.testng.Assert;
 
 import java.util.*;
 
-public class AdminPage_01 {
-    private Page page;
-    // Locators
-    private String adminMenu = "//span[text()='Admin']";
-    private final String headerSelector = "//div[@class='oxd-table-header']//div[@role='columnheader']";
-    private final String rowSelector = "//div[@class='oxd-table-body']/div[@class='oxd-table-card']";
-    private final String cellSelector = "div[role='cell']";
+public class AdminPage_01_StringParameter {
+    private final Page page;
+
+    // Locators (Locator object thay vì String)
+    private final Locator adminMenu;
+    private final Locator headerSelector;
+    private final Locator rowSelector;
+    private final Locator cellSelector;
+    private final Locator tableBody;
 
     // Constructor
-    public AdminPage_01(Page page) {
+    public AdminPage_01_StringParameter(Page page) {
         this.page = page;
+        this.adminMenu = page.locator("//span[text()='Admin']");
+        this.headerSelector = page.locator("//div[@role='row']");
+        this.rowSelector = page.locator("//div[@class='oxd-table-card']");
+        this.cellSelector = page.locator("//div[@role='cell']");
+        this.tableBody = page.locator("//div[@class='oxd-table-body']");
     }
 
     @Step("Open Admin Page")
-    // Action: click Admin menu
     public void openAdminPage() {
-        page.locator(adminMenu).click();
+        adminMenu.click();
         page.waitForURL("**/admin/viewSystemUsers");
-        page.waitForSelector("//div[@class='oxd-table-body']");
+        tableBody.waitFor();
     }
 
     // Get headers, skip checkbox and actions
     public List<String> getTableHeaders() {
-        Locator headerCells = page.locator(headerSelector);
-        int colCount = headerCells.count();
+        int colCount = headerSelector.count();
         List<String> headers = new ArrayList<>();
         for (int i = 1; i < colCount - 1; i++) { // bỏ checkbox đầu và Actions cuối
-            headers.add(headerCells.nth(i).innerText().trim());
+            headers.add(headerSelector.nth(i).innerText().trim());
         }
         return headers;
     }
@@ -42,11 +47,10 @@ public class AdminPage_01 {
     // Get table data as List<Map>
     public List<Map<String, String>> getUserTableData() {
         List<String> headers = getTableHeaders();
-        Locator rows = page.locator(rowSelector);
-        int rowCount = rows.count();
+        int rowCount = rowSelector.count();
         List<Map<String, String>> tableData = new ArrayList<>();
         for (int i = 0; i < rowCount; i++) {
-            Locator cells = rows.nth(i).locator(cellSelector);
+            Locator cells = rowSelector.nth(i).locator(cellSelector);
             int cellCount = cells.count();
             Map<String, String> rowMap = new LinkedHashMap<>();
             for (int j = 1; j < Math.min(cellCount - 1, headers.size() + 1); j++) {
@@ -60,14 +64,13 @@ public class AdminPage_01 {
 
     @Step("Click icon sort next to '{columnName}' and select '{sortType}' ")
     public void clickSortAndSelectType(String columnName, String sortType) {
-        Locator headers = page.locator(headerSelector);
-        int colCount = headers.count();
+        int colCount = headerSelector.count();
         for (int i = 1; i < colCount - 1; i++) {
-            String headerText = headers.nth(i).innerText().trim();
+            String headerText = headerSelector.nth(i).innerText().trim();
             if (headerText.equalsIgnoreCase(columnName)) {
-                Locator sortIcon = headers.nth(i).locator(".oxd-table-header-sort-icon");
+                Locator sortIcon = headerSelector.nth(i).locator(".oxd-table-header-sort-icon");
                 sortIcon.click();
-                Locator dropdown = headers.nth(i).locator(".oxd-table-header-sort-dropdown");
+                Locator dropdown = headerSelector.nth(i).locator(".oxd-table-header-sort-dropdown");
                 dropdown.locator("li:has-text('" + (sortType.equals("asc") ? "Ascending" : "Descending") + "')").click();
                 page.waitForTimeout(3000);
                 return;
@@ -86,14 +89,14 @@ public class AdminPage_01 {
         return columnData;
     }
 
-    //Print result
+    // Print result
     @Step("Verify column '{columnName}' is sorted in '{sortType}' order")
     public void VerifySort(String columnName, String sortType) {
 
         clickSortAndSelectType(columnName, sortType);
 
-        List<String> actualData = getColumnData(columnName); //List value UI
-        List<String> expectedData = new ArrayList<>(actualData); //List value expected
+        List<String> actualData = getColumnData(columnName); // List value UI
+        List<String> expectedData = new ArrayList<>(actualData); // List value expected
         if (sortType.equals("asc")) {
             Collections.sort(expectedData);
         } else {
@@ -109,6 +112,4 @@ public class AdminPage_01 {
         Assert.assertEquals(actualData, expectedData,
                 "Column " + columnName + " has not been sorted " + sortType.toUpperCase() + " correctly");
     }
-
-
 }

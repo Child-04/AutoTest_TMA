@@ -3,7 +3,7 @@ package Pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-public class TooltipPage {
+public class External_TooltipPage {
     private final Page page;
 
     // Locators
@@ -15,7 +15,7 @@ public class TooltipPage {
     private final Locator tooltipContentContrary;
 
     // Constructor
-    public TooltipPage(Page page) {
+    public External_TooltipPage(Page page) {
         this.page = page;
         this.buttonTooltip = page.locator("//button[@id='toolTipButton']");
         this.textBoxTooltip = page.locator("//*[@id='toolTipTextField']");

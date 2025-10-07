@@ -1,7 +1,7 @@
 package Tests;
 
 import Base.LoggedInBaseTest;
-import Pages.AdminPage_01;
+import Pages.AdminPage_01_StringParameter;
 import org.testng.annotations.Test;
 
 import java.util.*;
@@ -9,7 +9,7 @@ import java.util.*;
 public class TC02_AdminTable_GetUserTest extends LoggedInBaseTest {
     @Test
     public void TC06_test_GetUserTable() {
-        AdminPage_01 adminPage = new AdminPage_01(page);
+        AdminPage_01_StringParameter adminPage = new AdminPage_01_StringParameter(page);
         adminPage.openAdminPage();
         // Call method in AdminPage
         List<Map<String, String>> tableData = adminPage.getUserTableData();

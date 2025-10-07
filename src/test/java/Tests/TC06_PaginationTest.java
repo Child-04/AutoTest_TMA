@@ -1,7 +1,7 @@
 package Tests;
 
 import Base.BaseTest;
-import Pages.PaginationPage;
+import Pages.External_PaginationPage;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
@@ -10,13 +10,13 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 public class TC06_PaginationTest extends BaseTest {
-    private PaginationPage paginationPage;
+    private External_PaginationPage paginationPage;
 
     @BeforeMethod
     public void setup() {
         super.setup();
         page.navigate("https://utkarsh-react-table-demo.netlify.app/pagination");
-        paginationPage = new PaginationPage(page);
+        paginationPage = new External_PaginationPage(page);
     }
 
     @Test(description = "Display 10 rows/page")

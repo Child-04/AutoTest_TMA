@@ -1,14 +1,14 @@
 package Tests;
 
 import Base.BaseTest;
-import Pages.TooltipPage;
+import Pages.External_TooltipPage;
 import Utils.ScreenshotUtil;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TC07_TooltipTest extends BaseTest {
-    private TooltipPage toolTipPage;
+    private External_TooltipPage toolTipPage;
     private Utils.ScreenshotUtil screenshot;
 
     @BeforeMethod
@@ -16,7 +16,7 @@ public class TC07_TooltipTest extends BaseTest {
         super.setup();
         page.navigate("https://demoqa.com/tool-tips");
         page.evaluate("setTimeout(function(){debugger;}, 3000);");
-        toolTipPage = new TooltipPage(page);
+        toolTipPage = new External_TooltipPage(page);
         screenshot = new ScreenshotUtil(page);
     }
 

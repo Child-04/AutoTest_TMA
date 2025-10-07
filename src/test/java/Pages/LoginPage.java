@@ -10,52 +10,67 @@ import io.qameta.allure.Step;
 @Feature("Login Feature")
 public class LoginPage {
     private final Page page;
-    private final String errorLocator = "//div[contains(@class,'oxd-alert oxd-alert--error')]";
-    private final String errorUserReq = "//input[@name='username']/ancestor::div[contains(@class,'oxd-form-row')]//span";
-    private final String errorPassReq = "//input[@name='password']/ancestor::div[contains(@class,'oxd-form-row')]//span";
-    private final String usernameInput = "//input[@name='username']";
-    private final String passwordInput = "//input[@name='password']";
-    private final String loginButton = "//button[@type='submit']";
 
-    public  LoginPage(Page page) {
+    // Locators
+    private final Locator usernameField;
+    private final Locator passwordField;
+    private final Locator loginButton;
+    private final Locator invalidErrorMessage;
+    private final Locator usernameRequiredMessage;
+    private final Locator passwordRequiredMessage;
+
+    // Constructor
+    public LoginPage(Page page) {
         this.page = page;
+        this.usernameField = page.locator("//input[@name='username']");
+        this.passwordField = page.locator("//input[@name='password']");
+        this.loginButton = page.locator("//button[@type='submit']");
+        this.invalidErrorMessage = page.locator("//p[contains(normalize-space(), 'Invalid credentials')]");
+        this.usernameRequiredMessage = page.locator("//input[@name='username']/following::span");
+        this.passwordRequiredMessage = page.locator("//input[@name='password']/following::span");
     }
-    @Step("Step 1 : Open login page")
+
+    @Step("Open login page")
     public void openLoginPage() {
         page.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        page.waitForLoadState();
     }
 
-    @Step("Step 2 : Login with username: {0} and password: {1}")
+    @Step("Login with username: {username}, password: {password}")
     public void loginAs(String username, String password) {
-        page.fill(usernameInput, username);
-        page.fill(passwordInput, password);
-        page.click(loginButton);
+        usernameField.fill(username);
+        passwordField.fill(password);
+        loginButton.click();
     }
 
-    @Step("Step 3 : Check if login is successful")
+    @Step("Verify login is successful")
     public boolean isLoginSuccess() {
         page.waitForURL("**/dashboard/index");
         return page.url().contains("/dashboard/index");
     }
 
-    @Step("Step 3 : Get invalid credentials error message")
+    @Step("Get invalid login error")
     public String getInvalidError() {
-        return page.locator(errorLocator).textContent().trim();
+        invalidErrorMessage.waitFor();
+        return invalidErrorMessage.textContent().trim();
     }
 
-    @Step("Step 3: Get 'Required' message for username")
-    public String getUserRequiredError() {
-        return page.locator(errorUserReq).textContent().trim();
+    @Step("Get username required error")
+    public String getUsernameRequiredError() {
+        usernameRequiredMessage.waitFor();
+        return usernameRequiredMessage.textContent().trim();
     }
 
-    @Step("Step 3 : Get 'Required' message for Password")
-    public String getPassRequiredError() {
-        return page.locator(errorPassReq).textContent().trim();
+    @Step("Get password required error")
+    public String getPasswordRequiredError() {
+        passwordRequiredMessage.waitFor();
+        return passwordRequiredMessage.textContent().trim();
     }
+
     @Step("Step 3: Verify both 'Required' messages for empty username and password")
     public void verifyRequiredMessagesForEmptyCredentials() {
-        String userError = getUserRequiredError();
-        String passError = getPassRequiredError();
+        String userError = getUsernameRequiredError();
+        String passError = getPasswordRequiredError();
         assert userError.equals("Required") : "Username error not matched";
         assert passError.equals("Required") : "Password error not matched";
     }
