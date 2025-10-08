@@ -18,6 +18,9 @@ public class BaseTest {
 
     }
 
+    public void waitForVisible(Locator locator, int timeoutMs) {
+        locator.waitFor(new Locator.WaitForOptions().setTimeout(timeoutMs));
+    }
 
     @AfterClass
     public void teardown() {

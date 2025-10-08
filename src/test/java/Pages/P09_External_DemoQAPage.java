@@ -7,48 +7,68 @@ import com.microsoft.playwright.options.AriaRole;
 public class P09_External_DemoQAPage {
     private final Page page;
 
-    private final Locator PermanentAddress;
-    // Constructor
+    // Các locator
+    private final Locator inputFullName;
+    private final Locator inputEmail;
+    private final Locator inputCurrentAddress;
+    private final Locator inputPermanentAddress;
+    private final Locator btnSubmit;
+    private final Locator outputName;
+    private final Locator outputEmail;
+    private final Locator outputCurrentAddress;
+    private final Locator outputPermanentAddress;
+    private final Locator outputBox;
+
+    // =================== Constructor ===================
     public P09_External_DemoQAPage(Page page) {
         this.page = page;
-        this.PermanentAddress = page.locator("//textarea[@id = 'permanentAddress']");
+
+        // input fields
+        this.inputFullName = page.getByPlaceholder("Full Name");
+        this.inputEmail = page.getByPlaceholder("name@example.com");
+        this.inputCurrentAddress = page.getByPlaceholder("Current Address");
+        this.inputPermanentAddress = page.locator("//textarea[@id='permanentAddress']");
+        this.btnSubmit = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit"));
+
+        // output fields
+        this.outputName = page.locator("//p[@id='name']");
+        this.outputEmail = page.locator("//p[@id='email']");
+        this.outputCurrentAddress = page.locator("//p[@id='currentAddress']");
+        this.outputPermanentAddress = page.locator("//p[@id='permanentAddress']");
+        this.outputBox = page.locator("//div[@id='output']");
     }
 
+    // =================== Actions ===================
     public void fillForm(String fullName, String email, String currentAddress, String permanentAddress) {
-        page.getByLabel("Full Name");
-        page.getByPlaceholder("Full Name").fill(fullName);
-        page.getByPlaceholder("name@example.com").fill(email);
-        page.getByPlaceholder("Current Address").fill(currentAddress);
-        PermanentAddress.fill(permanentAddress);
+        inputFullName.fill(fullName);
+        inputEmail.fill(email);
+        inputCurrentAddress.fill(currentAddress);
+        inputPermanentAddress.fill(permanentAddress);
     }
 
     public void submit() {
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit")).click();
-        page.waitForSelector("//div[@id='output']");
+        btnSubmit.click();
     }
 
     // =================== Getters (verify output hiển thị) ===================
     public String getName() {
-        return page.textContent("//p[@id='name']").replace("Name:", "").trim();
+        return outputName.textContent().replace("Name:", "").trim();
     }
 
     public String getEmail() {
-        return page.textContent("//p[@id='email']").replace("Email:", "").trim();
+        return outputEmail.textContent().replace("Email:", "").trim();
     }
 
     public String getCurrentAddress() {
-        return page.textContent("//p[@id='currentAddress']").replace("Current Address :", "").trim();
-
+        return outputCurrentAddress.textContent().replace("Current Address :", "").trim();
     }
 
     public String getPermanentAddress() {
-        return page.textContent("//p[@id='permanentAddress']").replace("Permananet Address :", "").trim();
-
+        return outputPermanentAddress.textContent().replace("Permananet Address :", "").trim();
     }
 
     // =================== Helper ===================
     public boolean isOutputVisible() {
-        return page.isVisible("//div[@id='output']");
+        return outputBox.isVisible();
     }
-
 }
