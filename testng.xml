@@ -8,7 +8,8 @@
 <!--            <class name="Tests.TC07_TooltipTest"></class>-->
 <!--            <class name="Tests.TC08_SortDateTest"/>-->
 <!--            <class name="Tests.TC09_DemoQA_TextBoxTest"/>-->
-            <class name="Tests.TC10_CheckboxesTest"/>
+<!--            <class name="Tests.TC10_CheckboxesTest"/>-->
+            <class name="Tests.TC11_JotForm_RadioTest"/>
         </classes>
     </test>
 </suite>

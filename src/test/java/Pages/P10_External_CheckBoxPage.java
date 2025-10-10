@@ -2,6 +2,7 @@ package Pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Step;
 
 
@@ -14,9 +15,12 @@ public class P10_External_CheckBoxPage {
     // Constructor
     public P10_External_CheckBoxPage(Page page) {
         this.page = page;
-        // Cách 1: Dùng role
-        this.checkbox1 = page.getByRole(com.microsoft.playwright.options.AriaRole.CHECKBOX).nth(0);
-        this.checkbox2 = page.getByRole(com.microsoft.playwright.options.AriaRole.CHECKBOX).nth(1);
+
+        this.checkbox1 = page.getByRole(AriaRole.CHECKBOX,
+                new Page.GetByRoleOptions().setName("Checkbox 1"));
+
+        this.checkbox2 = page.getByRole(AriaRole.CHECKBOX,
+                new Page.GetByRoleOptions().setName("Checkbox 2"));
 
     }
 
