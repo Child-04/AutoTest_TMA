@@ -9,7 +9,8 @@
 <!--            <class name="Tests.TC08_SortDateTest"/>-->
 <!--            <class name="Tests.TC09_DemoQA_TextBoxTest"/>-->
 <!--            <class name="Tests.TC10_CheckboxesTest"/>-->
-            <class name="Tests.TC11_JotForm_RadioTest"/>
+<!--            <class name="Tests.TC11_JotForm_RadioTest"/>-->
+            <class name="Tests.TC12_JotForm_SelectTest"/>
         </classes>
     </test>
 </suite>
