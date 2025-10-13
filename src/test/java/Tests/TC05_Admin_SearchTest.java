@@ -25,7 +25,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
                 adminPage.isRecordFound("Admin"),
                 "Expected user 'Admin' should be displayed in search results."
         );
-        screenshot.takeScreenshot("testSearch_ByValidUsername");
+        screenshot.takeStepScreenshot("testSearch_ByValidUsername");
     }
 
     @Test(priority = 2, description = "Verify search by invalid username shows 'No Records Found' message")
@@ -40,7 +40,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
                 adminPage.isNoRecordBoxDisplayed(),
                 "Expected 'No Records Found' toast should be displayed."
         );
-        screenshot.takeScreenshot("testSearch_ByInvalidUsername");
+        screenshot.takeStepScreenshot("testSearch_ByInvalidUsername");
     }
 
     @Test(priority = 3, description = "Search with all empty fields - should return full user list")
@@ -54,7 +54,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
         );
         page.waitForTimeout(2000);
 
-        screenshot.takeScreenshot("testSearch_ByAllEmptyFields");
+        screenshot.takeStepScreenshot("testSearch_ByAllEmptyFields");
     }
 
     @Test(priority = 4, description = "Search with User Role = Admin")
@@ -63,7 +63,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
         adminPage.clickSearch();
         Assert.assertTrue(adminPage.getNumberOfRecords() > 0,
                 "Expected records with User Role = Admin");
-        screenshot.takeScreenshot("testSearchByUserRole");
+        screenshot.takeStepScreenshot("testSearchByUserRole");
     }
 
     @Test(priority = 6, description = "Search with Username + User Role + Status")
@@ -74,7 +74,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
         adminPage.clickSearch();
         Assert.assertTrue(adminPage.isRecordFound("Admin"),
                 "Expected records that match Username = Admin, User Role = Admin, Status = Enabled");
-    screenshot.takeScreenshot("testSearchByMultipleFilters");
+    screenshot.takeStepScreenshot("testSearchByMultipleFilters");
     }
 
 

@@ -26,7 +26,7 @@ public class TC07_TooltipTest extends BaseTest {
         page.evaluate("setTimeout(function(){debugger;}, 3000);");
         String tooltip = toolTipPage.getTooltipTextBTN();
         Assert.assertEquals(tooltip, "You hovered over the Button", "Tooltip for Button is incorrect!");
-        screenshot.takeScreenshot("Display tooltip of Button");
+        screenshot.takeStepScreenshot("Display tooltip of Button");
     }
 
     @Test(priority = 2, description = "Verify tooltip of Textbox")

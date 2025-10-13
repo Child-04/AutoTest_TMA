@@ -20,7 +20,7 @@ public class P04_AdminPage_02_StringandLocatorParameter {
     public P04_AdminPage_02_StringandLocatorParameter(Page page) {
         this.page = page;
         this.adminMenu = page.locator("//span[text()='Admin']");
-        this.headerSelector = page.locator("//div[@role='row']");
+        this.headerSelector = page.locator("//div[@class='oxd-table-header']//div[@role='columnheader']");
         this.rowSelector = page.locator("//div[@class='oxd-table-card']");
         this.cellSelector = page.locator("//div[@role='cell']");
         this.tableBody = page.locator("//div[@class='oxd-table-body']");
@@ -41,6 +41,7 @@ public class P04_AdminPage_02_StringandLocatorParameter {
             headers.add(headerSelector.nth(i).innerText().trim());
         }
         return headers;
+
     }
 
     // Get table data as List<Map>
@@ -62,16 +63,16 @@ public class P04_AdminPage_02_StringandLocatorParameter {
     }
 
     public Locator getColumnLocatorByName(String columnName) {
-        Locator headers = headerSelector;
-        int colCount = headers.count();
-        for (int i = 1; i < colCount - 1; i++) {
-            String headerText = headers.nth(i).innerText().trim();
+        int colCount = headerSelector.count();
+        for (int i = 0; i < colCount; i++) {
+            String headerText = headerSelector.nth(i).innerText().trim();
             if (headerText.equalsIgnoreCase(columnName)) {
-                return headers.nth(i);
+                return headerSelector.nth(i);
             }
         }
         throw new RuntimeException("No column found: " + columnName);
     }
+
 
     @Step("Click icon sort next to '{columnName}' and select '{sortType}' ")
     public void clickSortAndSelectType(String columnName, Locator columnLocator, String sortType) {
