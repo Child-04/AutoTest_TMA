@@ -68,7 +68,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\*;%APP_HOME%\lib\config
+set CLASSPATH=%APP_HOME%\lib\*;%APP_HOME%\lib\Config
 
 
 @rem Execute allure

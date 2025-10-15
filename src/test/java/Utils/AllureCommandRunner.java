@@ -9,7 +9,7 @@ public class AllureCommandRunner {
     public static void runCommand(String command) {
         try {
             ProcessBuilder builder = new ProcessBuilder();
-            builder.command("cmd.exe", "/c", command); // nếu bạn dùng Mac/Linux thì đổi thành "bash", "-c"
+            builder.command("cmd.exe", "/c", command);
             builder.redirectErrorStream(true);
 
             Process process = builder.start();

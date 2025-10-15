@@ -10,11 +10,12 @@
 <!--            <class name="Tests.TC06_PaginationTest"/>-->
 <!--            <class name="Tests.TC07_TooltipTest"></class>-->
 <!--            <class name="Tests.TC08_SortDateTest"/>-->
-            <class name="Tests.TC09_DemoQA_TextBoxTest"/>
+<!--            <class name="Tests.TC09_DemoQA_TextBoxTest"/>-->
 <!--            <class name="Tests.TC10_CheckboxesTest"/>-->
 <!--            <class name="Tests.TC11_JotForm_RadioTest"/>-->
 <!--            <class name="Tests.TC12_JotForm_SelectTest"/>-->
 <!--            <class name="Tests.TC13_Jquery_DatePickerTest"/>-->
+            <class name="Tests.TC14_UploadFileTest"/>
         </classes>
     </test>
 </suite>
