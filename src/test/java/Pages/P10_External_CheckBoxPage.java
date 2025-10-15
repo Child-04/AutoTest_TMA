@@ -24,17 +24,27 @@ public class P10_External_CheckBoxPage {
 
     }
 
+    @Step("Navigate to checkbox page")
+    public void navigateToPage() {
+        page.navigate("https://the-internet.herokuapp.com/checkboxes");
+    }
+
+    @Step("Check checkbox 1")
     public void checkBox1() {
         checkbox1.check();
     }
 
+    @Step("Uncheck checkbox 1")
     public void uncheckBox1() {
         checkbox1.uncheck();
     }
+
+    @Step("Check checkbox 2")
     public void checkBox2() {
         checkbox2.check();
     }
 
+    @Step("Uncheck checkbox 2")
     public void uncheckBox2() {
         checkbox2.uncheck();
     }
@@ -45,6 +55,7 @@ public class P10_External_CheckBoxPage {
     public boolean isBox2Checked() {
         return checkbox2.isChecked();
     }
+
     // ----- Combined actions -----
     @Step("Check all checkboxes")
     public void checkAll() {

@@ -1,7 +1,8 @@
-package Pages;
+package Pages.DemoQAPage;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 
 public class P07_External_TooltipPage {
     private final Page page;
@@ -25,15 +26,23 @@ public class P07_External_TooltipPage {
         this.tooltipContentBTN = page.locator("//*[@id='buttonToolTip']/div[2]");
 
     }
+    @Step("Navigate to tooltip demoqa page")
+    public void navigateToPage() {
+        page.navigate("https://demoqa.com/tool-tips");
+    }
+
     // Actions
+    @Step("Hover Button ")
     public void hoverButton() {
         buttonTooltip.hover();
     }
 
+    @Step("Hover Textbox")
     public void hoverTextBox() {
         textBoxTooltip.hover();
     }
 
+    @Step("Hover Contrary Text")
     public void hoverContraryText() {
         contraryText.hover();
     }

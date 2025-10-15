@@ -1,7 +1,9 @@
-package Pages;
+package Pages.JotForm;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Step;
+
 import java.util.List;
 
 public class P11_JotForm_RadioPage {
@@ -12,7 +14,13 @@ public class P11_JotForm_RadioPage {
         this.page = page;
     }
 
-    // Chọn radio theo tên
+    @Step("Navigate to Radio page")
+    public void navigateToPage() {
+        page.navigate("https://automationfc.github.io/multiple-fields/");
+    }
+
+    // Select radio as name
+    @Step("Select radio '{name}'")
     public void selectRadio(String name) {
        // page.getByRole(AriaRole.RADIO, new Page.GetByRoleOptions().setName("3-5 days")).waitFor();
 

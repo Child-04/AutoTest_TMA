@@ -1,7 +1,7 @@
 package Tests;
 
 import Base.LoggedInBaseTest;
-import Pages.P02_AdminPage_01_StringParameter;
+import Pages.OrangeHRMPage.P02_AdminPage_01_StringParameter;
 import org.testng.annotations.Test;
 
 import java.util.*;

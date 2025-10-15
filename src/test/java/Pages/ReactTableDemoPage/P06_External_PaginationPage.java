@@ -1,4 +1,4 @@
-package Pages;
+package Pages.ReactTableDemoPage;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -16,12 +16,10 @@ public class P06_External_PaginationPage {
     private final Locator lastBTN;
     private final Locator numberInput;
     private final Locator pageSizeDropdown;
-    private final Locator pageInfoText; // use for "Page 1 of 20"
+    private final Locator pageInfoText;
 
     public P06_External_PaginationPage(Page page) {
         this.page = page;
-
-        // Khởi tạo locators
         this.tableRows = page.locator("//table//tbody/tr");
         this.nextBTN = page.locator("//button[text()='Next']");
         this.prevBTN = page.locator("//button[text()='Previous']");
@@ -32,48 +30,41 @@ public class P06_External_PaginationPage {
         this.pageInfoText = page.locator("//span[contains(text(),'Page')]");
     }
 
-    // purpose: select the number of line to display
-    @Step("Select the number of lines to display: {size}")
+    public void navigateToPage() {
+        page.navigate("https://utkarsh-react-table-demo.netlify.app/pagination");
+    }
+
     public void selectPageSize(String size) {
         pageSizeDropdown.selectOption(size);
         page.waitForTimeout(1000);
     }
 
-    // purpose: count how many rows in a page -> check and compare expected
-    @Step("Get the current displayed line number")
     public int getRowCount() {
         return tableRows.count();
     }
 
-    // purpose: compare when entering number in textbox and click button moving to another page
-    @Step("Get the current page")
     public int getCurrentPageNumber() {
-        String pageText = pageInfoText.innerText(); // "Page 1 of 20"
+        String pageText = pageInfoText.innerText();
         String current = pageText.replaceAll("[^0-9]", " ").trim().split("\\s+")[0];
         return Integer.parseInt(current);
     }
 
-    // Check the last page
-    @Step("Get total number of pages")
     public int getTotalPages() {
-        String pageText = pageInfoText.innerText(); // "Page 1 of 20"
+        String pageText = pageInfoText.innerText();
         String[] numbers = pageText.replaceAll("[^0-9]", " ").trim().split("\\s+");
         return Integer.parseInt(numbers[1]);
     }
 
-    @Step("Enter the page number to go to: {target}")
     public void goToPage(int target) {
         numberInput.fill(String.valueOf(target));
         page.keyboard().press("Enter");
         page.waitForTimeout(1000);
     }
 
-    @Step("Get list of IDs displayed on current page")
     public List<String> getVisibleRowIDs() {
         return page.locator("//table//tbody/tr/td[1]").allInnerTexts();
     }
 
-    // ----- Button status check -----
     private boolean isButtonDisabled(Locator button) {
         return button.getAttribute("disabled") != null;
     }
@@ -93,14 +84,53 @@ public class P06_External_PaginationPage {
     public boolean isLastDisabled() {
         return isButtonDisabled(lastBTN);
     }
-    @Step("Get row count for all pages")
-    public int[] getRowCountsForAllPages() {
-        int totalPages = getTotalPages();
-        int[] rowCounts = new int[totalPages];
-        for (int i = 1; i <= totalPages; i++) {
-            goToPage(i);
-            rowCounts[i - 1] = getRowCount();
-        }
-        return rowCounts;
+
+
+
+    @Step("Verify buttons on first page are disabled")
+    public void verifyFirstPageButtons() {
+        goToPage(1);
+        assert isFirstDisabled() : "First button should be disabled on page 1";
+        assert isPreviousDisabled() : "Previous button should be disabled on page 1";
     }
+
+    @Step("Verify buttons on last page are disabled")
+    public void verifyLastPageButtons() {
+        int totalPages = getTotalPages();
+        goToPage(totalPages);
+        assert isNextDisabled() : "Next button should be disabled on last page";
+        assert isLastDisabled() : "Last button should be disabled on last page";
+    }
+
+    @Step("Verify navigation beyond last page stops at last page")
+    public void verifyOutOfRangePageNavigation() {
+        int totalPages = getTotalPages();
+        goToPage(totalPages + 50);
+        int currentPage = getCurrentPageNumber();
+        assert currentPage == totalPages : "Page should stop at last page when input exceeds range, but is at: " + currentPage;
+    }
+
+    @Step("Verify data changes between pages")
+    public void verifyPageTransitionAndDataChange() {
+        goToPage(1);
+        List<String> page1IDs = getVisibleRowIDs();
+
+        int totalPages = getTotalPages();
+        if (totalPages > 1) {
+            goToPage(2);
+            List<String> page2IDs = getVisibleRowIDs();
+
+            assert !page1IDs.equals(page2IDs) : "Data did not change between page 1 and 2";
+            for (String id : page2IDs) {
+                assert !page1IDs.contains(id) : "Duplicate ID found between page 1 and 2: " + id;
+            }
+        }
+    }
+
+    @Step("Verify row count does not exceed selected page size")
+    public void verifyRowCountDoesNotExceed(String size) {
+        int actualRows = getRowCount();
+        assert actualRows <= Integer.parseInt(size) : "Displayed " + actualRows + " rows, exceeding page size " + size;
+    }
+
 }

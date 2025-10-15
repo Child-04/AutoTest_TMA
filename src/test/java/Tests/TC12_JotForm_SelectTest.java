@@ -1,10 +1,16 @@
 package Tests;
 
 import Base.BaseTest;
-import Pages.P12_JotForm_SelectPage;
+import Pages.JotForm.P12_JotForm_SelectPage;
+import io.qameta.allure.Allure;
+import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class TC12_JotForm_SelectTest extends BaseTest {
     private P12_JotForm_SelectPage selectPage;
@@ -12,7 +18,16 @@ public class TC12_JotForm_SelectTest extends BaseTest {
     @BeforeMethod
     public void openPage() {
         selectPage = new P12_JotForm_SelectPage(page);
-        page.navigate("https://automationfc.github.io/multiple-fields/");
+        selectPage.navigateToPage();
+    }
+
+    @Test(description = "Verify dropdown gender display correctly")
+    public void verifyGenderDropdown() {
+
+        selectPage.clickDropdown();
+        List<String> expectedOptions = Arrays.asList("", "Male", "Female");
+        selectPage.verifyDropdownOptions(expectedOptions);
+        takeScreenshot("verifyGenderDropdown");
     }
 
     @Test(description = "Check the Female selection in the Gender dropdown")
@@ -49,4 +64,37 @@ public class TC12_JotForm_SelectTest extends BaseTest {
         Assert.assertEquals(selected, "", "The selected value is incorrect!");
         takeScreenshot("Empty selection");
     }
+
+
+    @Test(description = "Select random date and capture dropdown states")
+    public void testSelectRandomDate() {
+
+        String day = selectPage.selectRandomDay();
+        takeScreenshot("After_Select_Day_" + day);
+
+        String month = selectPage.selectRandomMonth();
+        takeScreenshot("After_Select_Month_" + month);
+
+        String year = selectPage.selectRandomYear();
+        takeScreenshot("After_Select_Year_" + year);
+    }
+
+    @Test(description = "Verify list month dropdown displayed correctly")
+    public void testDropdown() {
+
+        // Click dropdown to open
+        selectPage.clickMonth();
+        takeScreenshot("Dropdown_Month_Opened");
+
+        selectPage.clickDay();
+        takeScreenshot("Dropdown_Day_Opened");
+
+        selectPage.clickYear();
+        takeScreenshot("Dropdown_Year_Opened");
+
+    }
+
+
+
+
 }

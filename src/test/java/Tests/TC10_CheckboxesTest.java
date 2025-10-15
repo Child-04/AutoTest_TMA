@@ -13,7 +13,7 @@ public class TC10_CheckboxesTest extends BaseTest {
     @BeforeMethod
     public void openPage() {
         checkboxPage = new P10_External_CheckBoxPage(page);
-        page.navigate("https://the-internet.herokuapp.com/checkboxes");
+        checkboxPage.navigateToPage();
     }
 
     @Test

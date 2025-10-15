@@ -1,4 +1,4 @@
-package Pages;
+package Pages.ReactTableDemoPage;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -24,6 +24,11 @@ public class P08_External_SortDatePage {
         this.ToggleSort = page.locator("//th[contains(normalize-space(),'Date of Birth')]//span");
         this.DateCells = page.locator("//tbody/tr/td[4]");
         this.FirstRowId = page.locator("//tbody/tr[1]/td[1]");
+    }
+
+    @Step("Navigate to sort date page")
+    public void navigateToPage() {
+        page.navigate("https://utkarsh-react-table-demo.netlify.app/sort");
     }
 
     @Step("Click 'Date of Birth' column — ascending sort")

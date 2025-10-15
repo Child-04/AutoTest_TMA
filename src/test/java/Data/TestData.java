@@ -10,15 +10,25 @@ public class TestData {
     public static final String VALID_PASSWORD = "admin123";
     public static final String INVALID_PASSWORD = "wrongPassword";
 
+
     //header table
     public static final String USERNAME = "Username";
     public static final String USER_ROLE = "User Role";
     public static final String EMPLOYEE_NAME = "Employee Name";
     public static final String STATUS = "Status";
+
     // Dropdown values
     public static final String ROLE_ADMIN = "Admin";
     public static final String ROLE_ESS = "ESS";
     public static final String STATUS_ENABLED = "Enabled";
     public static final String STATUS_DISABLED = "Disabled";
+
+    public static final String WRONG_EMPLOYEE = "employeeName";
+
+    //Text input
+    public static final String NAME = "Tuyet Nhi";
+    public static final String EMAIL = "nhint@example.com";
+    public static final String CURRENT_ADDRESS = "123 Dương Thị Mười";
+    public static final String PERMANENT_ADDRESS = "234 An Dương Vương";
 
 }

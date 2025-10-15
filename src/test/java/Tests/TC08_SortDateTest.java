@@ -1,7 +1,7 @@
 package Tests;
 
 import Base.BaseTest;
-import Pages.P08_External_SortDatePage;
+import Pages.ReactTableDemoPage.P08_External_SortDatePage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -15,8 +15,8 @@ public class TC08_SortDateTest extends BaseTest {
 
     @BeforeMethod
     public void openPage() {
-        page.navigate("https://utkarsh-react-table-demo.netlify.app/sort");
         sortPage = new P08_External_SortDatePage(page);
+        sortPage.navigateToPage();
     }
 
     @Test(description = "Verify Date of Birth column sorting (ascending, descending, reset)")
@@ -31,6 +31,7 @@ public class TC08_SortDateTest extends BaseTest {
             Assert.assertFalse(ascDates.get(i).isAfter(ascDates.get(i + 1)),
                     "Dates not in ascending order at row " + (i + 1)); //If == true =>> the upper day is bigger than the lower day
         }
+        takeScreenshot("Sort Ascending");
 
         // STEP 2: Descending
         sortPage.clickSortDescending();
@@ -39,10 +40,13 @@ public class TC08_SortDateTest extends BaseTest {
             Assert.assertFalse(descDates.get(i).isBefore(descDates.get(i + 1)),
                     "Dates not in descending order at row " + (i + 1));
         }
+        takeScreenshot("Sort Descending");
 
         // STEP 3: Reset
         sortPage.clickResetSort();
         Assert.assertFalse(sortPage.isToggleVisible(), "Toggle should disappear after reset");
         Assert.assertEquals(sortPage.getFirstRowId(), "1", "After reset, first ID should be 1");
+
+        takeScreenshot("Click 3 times and reset column");
     }
 }
