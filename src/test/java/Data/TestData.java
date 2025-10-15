@@ -28,7 +28,7 @@ public class TestData {
     //Text input
     public static final String NAME = "Tuyet Nhi";
     public static final String EMAIL = "nhint@example.com";
-    public static final String CURRENT_ADDRESS = "123 Dương Thị Mười";
-    public static final String PERMANENT_ADDRESS = "234 An Dương Vương";
+    public static final String CURRENT_ADDRESS = "123 Le Loi\nDistrict 1\n HCMC";
+    public static final String PERMANENT_ADDRESS = "456 Tran Hung Dao\nDistrict 5\nHCMC";
 
 }
