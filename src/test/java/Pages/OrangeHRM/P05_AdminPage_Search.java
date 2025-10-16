@@ -1,4 +1,4 @@
-package Pages;
+package Pages.OrangeHRM;
 import Base.BaseTest;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;

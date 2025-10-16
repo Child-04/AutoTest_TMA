@@ -1,8 +1,9 @@
-package Pages;
+package Pages.OrangeHRM;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.*;
 
+import static Utils.TestData.*;
 
 
 @Epic("Authentication")
@@ -29,13 +30,23 @@ public class P01_LoginPage {
         this.passwordRequiredMessage = page.locator("//input[@name='password']/following::span").first();
     }
 
-    @Step("Open login page")
+    @Step("Step: Open login page")
     public void openLoginPage() {
-        page.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        page.navigate(BASE_URL);
         page.waitForLoadState();
     }
+    @Step("Step: Open OrangeHRM login page and login successfully")
+    public void enterUserAccount() {
 
-    @Step("Login with username: {username}, password: {password}")
+        usernameField.fill(VALID_USERNAME);
+        passwordField.fill(VALID_PASSWORD);
+        loginButton.click();
+        page.waitForURL("**/dashboard/index");
+    }
+
+
+
+    @Step("Step: Login with username: {username}, password: {password}")
     public void loginAs(String username, String password) {
         usernameField.waitFor();
         usernameField.fill(username);
@@ -44,7 +55,7 @@ public class P01_LoginPage {
         loginButton.click();
     }
 
-    @Step("Verify login is successful")
+    @Step("Step: Verify login is successful")
     public boolean isLoginSuccess() {
         page.waitForURL("**/dashboard/index");
         return page.url().contains("/dashboard/index");
@@ -68,7 +79,7 @@ public class P01_LoginPage {
         return passwordRequiredMessage.textContent().trim();
     }
 
-    @Step("Step 3: Verify both 'Required' messages for empty username and password")
+    @Step("Verify both 'Required' messages for empty username and password")
     public void verifyRequiredMessagesForEmptyCredentials() {
         String userError = getUsernameRequiredError();
         String passError = getPasswordRequiredError();

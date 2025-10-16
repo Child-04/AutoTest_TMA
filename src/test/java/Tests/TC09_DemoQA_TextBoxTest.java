@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static Data.TestData.*;
+import static Utils.TestData.*;
 
 public class TC09_DemoQA_TextBoxTest extends BaseTest {
     private P09_DemoQA_TextInputPage external_DemoQAPage;

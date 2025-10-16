@@ -1,13 +1,13 @@
-package Tests;
+package Tests.OrangeHRM;
 import Base.BaseTest;
-import Pages.P01_LoginPage;
+import Pages.OrangeHRM.P01_LoginPage;
 import io.qameta.allure.Step;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static Data.TestData.*;
+import static Utils.TestData.*;
 
 public class TC01_LoginTest extends BaseTest {
     private P01_LoginPage loginPage;

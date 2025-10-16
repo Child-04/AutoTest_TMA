@@ -1,30 +1,29 @@
-package Tests;
+package Tests.OrangeHRM;
 
-import Base.LoggedInBaseTest;
-import Pages.P04_AdminPage_02_StringandLocatorParameter;
+import Base.BaseTest;
+import Pages.OrangeHRM.P01_LoginPage;
+import Pages.OrangeHRM.P04_AdminPage_02_StringandLocatorParameter;
 import com.microsoft.playwright.Locator;
 import jdk.jfr.Description;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static Data.TestData.*;
+import static Utils.TestData.*;
 
-public class  TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
+public class  TC04_AdminTable02_SortingTest  extends BaseTest {
 
     private P04_AdminPage_02_StringandLocatorParameter adminPage;
-    private Utils.ScreenshotUtil screenshot;
+    private P01_LoginPage loginPage;
 
     @BeforeMethod
     public void goToAdminPage() {
         adminPage = new P04_AdminPage_02_StringandLocatorParameter(page);
+        loginPage = new P01_LoginPage(page);
+        loginPage.openLoginPage();
+        loginPage.enterUserAccount();
         adminPage.openAdminPage();
     }
 
-   // @Test
-//    public void printHeader(){
-//        List<String> headers = adminPage.getTableHeaders();
-//        System.out.println("Headers: " + headers);
-//    }
 
     @Test(description = "Verify sorting of Username column in ascending order")
     @Description("System should correctly sort the Username column in ascending order")

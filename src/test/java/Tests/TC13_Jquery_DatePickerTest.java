@@ -18,7 +18,6 @@ public class TC13_Jquery_DatePickerTest extends BaseTest {
         datePickerPage.navigateToPage();
     }
 
-
     @Test
     @Description("Verify that user can select today's date, the displayed value matches the current system date.")
     public void testClickDatePickerToday() {

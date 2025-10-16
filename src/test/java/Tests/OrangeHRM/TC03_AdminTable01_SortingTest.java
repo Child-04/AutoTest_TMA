@@ -1,19 +1,25 @@
-package Tests;
+package Tests.OrangeHRM;
 
-import Base.LoggedInBaseTest;
-import Pages.P02_AdminPage_01_StringParameter;
+import Base.BaseTest;
+import Pages.OrangeHRM.P01_LoginPage;
+import Pages.OrangeHRM.P02_AdminPage_01_StringParameter;
 import jdk.jfr.Description;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static Data.TestData.*;
+import static Utils.TestData.*;
 
-public class TC03_AdminTable01_SortingTest extends LoggedInBaseTest {
+public class TC03_AdminTable01_SortingTest extends BaseTest {
 
     private P02_AdminPage_01_StringParameter adminPage;
+    private P01_LoginPage loginPage;
+
     @BeforeMethod
     public void goToAdminPage() {
         adminPage = new P02_AdminPage_01_StringParameter(page);
+        loginPage = new P01_LoginPage(page);
+        loginPage.openLoginPage();
+        loginPage.enterUserAccount();
         adminPage.openAdminPage();
     }
     @Test(description = "Verify sorting of Username column in ascending order")

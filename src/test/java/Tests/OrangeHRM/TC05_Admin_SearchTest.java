@@ -1,19 +1,22 @@
-package Tests;
+package Tests.OrangeHRM;
 
-import Base.LoggedInBaseTest;
-import Pages.P05_AdminPage_Search;
-import Utils.ScreenshotUtil;
+import Base.BaseTest;
+import Pages.OrangeHRM.P01_LoginPage;
+import Pages.OrangeHRM.P05_AdminPage_Search;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class TC05_Admin_SearchTest extends LoggedInBaseTest {
+public class TC05_Admin_SearchTest extends BaseTest {
     private P05_AdminPage_Search adminPage;
-    private Utils.ScreenshotUtil screenshot;
+    private P01_LoginPage loginPage;
+
     @BeforeMethod
     public void goToAdminPage() {
         adminPage = new P05_AdminPage_Search(page);
-        screenshot = new ScreenshotUtil(page);
+        loginPage = new P01_LoginPage(page);
+        loginPage.openLoginPage();
+        loginPage.enterUserAccount();
         adminPage.openAdminPage();
     }
 

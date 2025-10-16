@@ -3,7 +3,7 @@ package Tests;
 import Base.BaseTest;
 import Pages.P14_External_UploadFilePage;
 import Config.FileUploadConfig;
-import Data.TestData;
+import Utils.TestData;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

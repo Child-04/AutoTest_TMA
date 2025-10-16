@@ -1,4 +1,4 @@
-package Data;
+package Utils;
 
 import Config.FileUploadConfig;
 
