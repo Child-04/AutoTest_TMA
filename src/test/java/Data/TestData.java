@@ -1,5 +1,7 @@
 package Data;
 
+import Config.FileUploadConfig;
+
 public class TestData {
     // Base URL (có thể đọc từ file config)
     public static final String BASE_URL = "https://opensource-demo.orangehrmlive.com";
@@ -20,5 +22,17 @@ public class TestData {
     public static final String ROLE_ESS = "ESS";
     public static final String STATUS_ENABLED = "Enabled";
     public static final String STATUS_DISABLED = "Disabled";
+
+    //Text input
+    public static final String NAME = "Tuyet Nhi";
+    public static final String EMAIL = "nhint@example.com";
+    public static final String CURRENT_ADDRESS = "123 Le Loi\nDistrict 1\n HCMC";
+    public static final String PERMANENT_ADDRESS = "456 Tran Hung Dao\nDistrict 5\nHCMC";
+
+    //File
+
+    public static final FileUploadConfig SAMPLE_FILE = new FileUploadConfig("example.txt", "src/test/resources/files");
+    public static final FileUploadConfig IMAGE_FILE = new FileUploadConfig("image.png", "src/test/resources/files");
+
 
 }

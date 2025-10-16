@@ -25,7 +25,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
                 adminPage.isRecordFound("Admin"),
                 "Expected user 'Admin' should be displayed in search results."
         );
-        screenshot.takeStepScreenshot("testSearch_ByValidUsername");
+        takeScreenshot("testSearch_ByValidUsername");
     }
 
     @Test(priority = 2, description = "Verify search by invalid username shows 'No Records Found' message")
@@ -40,7 +40,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
                 adminPage.isNoRecordBoxDisplayed(),
                 "Expected 'No Records Found' toast should be displayed."
         );
-        screenshot.takeStepScreenshot("testSearch_ByInvalidUsername");
+        takeScreenshot("testSearch_ByInvalidUsername");
     }
 
     @Test(priority = 3, description = "Search with all empty fields - should return full user list")
@@ -54,7 +54,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
         );
         page.waitForTimeout(2000);
 
-        screenshot.takeStepScreenshot("testSearch_ByAllEmptyFields");
+        takeScreenshot("testSearch_ByAllEmptyFields");
     }
 
     @Test(priority = 4, description = "Search with User Role = Admin")
@@ -63,7 +63,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
         adminPage.clickSearch();
         Assert.assertTrue(adminPage.getNumberOfRecords() > 0,
                 "Expected records with User Role = Admin");
-        screenshot.takeStepScreenshot("testSearchByUserRole");
+        takeScreenshot("testSearchByUserRole");
     }
 
     @Test(priority = 6, description = "Search with Username + User Role + Status")
@@ -74,7 +74,7 @@ public class TC05_Admin_SearchTest extends LoggedInBaseTest {
         adminPage.clickSearch();
         Assert.assertTrue(adminPage.isRecordFound("Admin"),
                 "Expected records that match Username = Admin, User Role = Admin, Status = Enabled");
-    screenshot.takeStepScreenshot("testSearchByMultipleFilters");
+        takeScreenshot("testSearchByMultipleFilters");
     }
 
 

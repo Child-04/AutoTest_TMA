@@ -2,14 +2,12 @@ package Tests;
 
 import Base.BaseTest;
 import Pages.P07_External_TooltipPage;
-import Utils.ScreenshotUtil;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TC07_TooltipTest extends BaseTest {
     private P07_External_TooltipPage toolTipPage;
-    private Utils.ScreenshotUtil screenshot;
 
     @BeforeMethod
     public void setup() {
@@ -17,7 +15,6 @@ public class TC07_TooltipTest extends BaseTest {
         page.navigate("https://demoqa.com/tool-tips");
         page.evaluate("setTimeout(function(){debugger;}, 3000);");
         toolTipPage = new P07_External_TooltipPage(page);
-        screenshot = new ScreenshotUtil(page);
     }
 
     @Test(priority = 1, description = "Verify tooltip of Button")
@@ -26,7 +23,7 @@ public class TC07_TooltipTest extends BaseTest {
         page.evaluate("setTimeout(function(){debugger;}, 3000);");
         String tooltip = toolTipPage.getTooltipTextBTN();
         Assert.assertEquals(tooltip, "You hovered over the Button", "Tooltip for Button is incorrect!");
-        screenshot.takeStepScreenshot("Display tooltip of Button");
+        takeScreenshot("Display tooltip of Button");
     }
 
     @Test(priority = 2, description = "Verify tooltip of Textbox")
@@ -34,6 +31,7 @@ public class TC07_TooltipTest extends BaseTest {
         toolTipPage.hoverTextBox();
         String tooltip = toolTipPage.getTooltipTextBox();
         Assert.assertEquals(tooltip, "You hovered over the text field", "Tooltip for TextBox is incorrect!");
+        takeScreenshot("Display tooltip of Textbox");
     }
 
     @Test(priority = 3, description = "Verify tooltip of word 'Contrary'")
@@ -41,6 +39,7 @@ public class TC07_TooltipTest extends BaseTest {
         toolTipPage.hoverContraryText();
         String tooltip = toolTipPage.getTooltipContraryText();
         Assert.assertEquals(tooltip, "Hooray!", "Tooltip for Contrary text is incorrect!");
+        takeScreenshot("Display tooltip of Contrary Text");
     }
 
 }

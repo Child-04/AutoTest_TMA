@@ -2,6 +2,9 @@
 <suite name="Playwright Suite">
     <test name="Playwright Tests">
         <classes>
+<!--            <class name="Tests.TC01_LoginTest"/>-->
+<!--            <class name="Tests.TC02_AdminTable_GetUserTest"/>-->
+<!--            <class name="Tests.TC03_AdminTable01_SortingTest"/>-->
 <!--            <class name="Tests.TC04_AdminTable02_SortingTest"/>-->
 <!--            <class name="Tests.TC05_Admin_SearchTest"/>-->
 <!--            <class name="Tests.TC06_PaginationTest"/>-->
@@ -11,7 +14,8 @@
 <!--            <class name="Tests.TC10_CheckboxesTest"/>-->
 <!--            <class name="Tests.TC11_JotForm_RadioTest"/>-->
 <!--            <class name="Tests.TC12_JotForm_SelectTest"/>-->
-            <class name="Tests.TC13_Jquery_DatePickerTest"/>
+<!--            <class name="Tests.TC13_Jquery_DatePickerTest"/>-->
+            <class name="Tests.TC14_UploadFileTest"/>
         </classes>
     </test>
 </suite>

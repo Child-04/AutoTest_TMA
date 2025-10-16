@@ -7,8 +7,6 @@ import jdk.jfr.Description;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
 import static Data.TestData.*;
 
 public class  TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
@@ -34,7 +32,7 @@ public class  TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
         String columnName = "Username";
         Locator columnLocator = adminPage.getColumnLocatorByName(columnName);
         adminPage.VerifySort(columnName, columnLocator, "asc");
-        screenshot.takeStepScreenshot("Sort Username asc");
+        takeScreenshot("sortByUsername_ASC");
     }
 
     @Test(description = "Verify that sorting of Username column in descending order")
@@ -43,7 +41,7 @@ public class  TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
         String columnName = USERNAME;
         Locator columnLocator = adminPage.getColumnLocatorByName(columnName);
         adminPage.VerifySort(columnName, columnLocator, "desc");
-        screenshot.takeStepScreenshot("sort Username desc");
+        takeScreenshot("sortByUsername_DESC");
     }
 
     @Test(description = "Verify that sorting of Employee Name in ascending order")
@@ -52,7 +50,7 @@ public class  TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
         String columnName = EMPLOYEE_NAME;
         Locator columnLocator = adminPage.getColumnLocatorByName(columnName);
         adminPage.VerifySort(columnName, columnLocator, "asc");
-        screenshot.takeStepScreenshot("sortEmployeeName asc");
+        takeScreenshot("sortByEmployeeName_ASC");
     }
     @Test(description = "Verify that sorting of Employee Name in descending order")
     @Description("System should sort correctly the Employee Name in descending order")
@@ -60,7 +58,7 @@ public class  TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
         String columnName = EMPLOYEE_NAME;
         Locator columnLocator = adminPage.getColumnLocatorByName(columnName);
         adminPage.VerifySort(columnName, columnLocator, "desc");
-        screenshot.takeStepScreenshot("sortEmployeeName desc");
+        takeScreenshot("sortByEmployeeName_DESC");
     }
 
     @Test(description = "Verify that sorting of User Role in ascending order")
@@ -69,7 +67,7 @@ public class  TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
         String columnName = USER_ROLE;
         Locator columnLocator = adminPage.getColumnLocatorByName(columnName);
         adminPage.VerifySort(columnName, columnLocator, "asc");
-        screenshot.takeStepScreenshot("Sort User Role asc");
+        takeScreenshot("sortByUserRole_ASC");
     }
     @Test(description = "Verify that sorting of User Role in descending order")
     @Description("System should sort correctly the User Role in descending order ")
@@ -77,7 +75,7 @@ public class  TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
         String columnName = USER_ROLE;
         Locator columnLocator = adminPage.getColumnLocatorByName(columnName);
         adminPage.VerifySort(columnName, columnLocator, "desc");
-        screenshot.takeStepScreenshot("sort User Role desc");
+        takeScreenshot("sortByUserRole_DESC");
     }
 
     @Test(description = "Verify that sorting of Status in ascending order")
@@ -86,7 +84,7 @@ public class  TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
         String columnName = STATUS;
         Locator columnLocator = adminPage.getColumnLocatorByName(columnName);
         adminPage.VerifySort(columnName, columnLocator, "asc");
-        screenshot.takeStepScreenshot("Sort Status asc");
+        takeScreenshot("sortByStatus_ASC");
     }
 
     @Test(description = "Verify that sorting of Status in ascending order")
@@ -95,6 +93,6 @@ public class  TC04_AdminTable02_SortingTest extends LoggedInBaseTest {
         String columnName = STATUS;
         Locator columnLocator = adminPage.getColumnLocatorByName(columnName);
         adminPage.VerifySort(columnName, columnLocator, "desc");
-        screenshot.takeStepScreenshot("sort Status desc");
+        takeScreenshot("sortByStatus_DESC");
     }
 }

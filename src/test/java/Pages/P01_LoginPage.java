@@ -1,9 +1,8 @@
 package Pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
+
 
 
 @Epic("Authentication")
@@ -26,8 +25,8 @@ public class P01_LoginPage {
         this.passwordField = page.locator("//input[@name='password']");
         this.loginButton = page.locator("//button[@type='submit']");
         this.invalidErrorMessage = page.locator("//p[contains(normalize-space(), 'Invalid credentials')]");
-        this.usernameRequiredMessage = page.locator("//input[@name='username']/following::span");
-        this.passwordRequiredMessage = page.locator("//input[@name='password']/following::span");
+        this.usernameRequiredMessage = page.locator("//input[@name='username']/following::span").first();
+        this.passwordRequiredMessage = page.locator("//input[@name='password']/following::span").first();
     }
 
     @Step("Open login page")
@@ -38,7 +37,9 @@ public class P01_LoginPage {
 
     @Step("Login with username: {username}, password: {password}")
     public void loginAs(String username, String password) {
+        usernameField.waitFor();
         usernameField.fill(username);
+        passwordField.waitFor();
         passwordField.fill(password);
         loginButton.click();
     }

@@ -21,7 +21,7 @@ public class P02_AdminPage_01_StringParameter {
     public P02_AdminPage_01_StringParameter(Page page) {
         this.page = page;
         this.adminMenu = page.locator("//span[text()='Admin']");
-        this.headerSelector = page.locator("//div[@role='row']");
+        this.headerSelector = page.locator("//div[@class='oxd-table-header']//div[@role='columnheader']");
         this.rowSelector = page.locator("//div[@class='oxd-table-card']");
         this.cellSelector = page.locator("//div[@role='cell']");
         this.tableBody = page.locator("//div[@class='oxd-table-body']");

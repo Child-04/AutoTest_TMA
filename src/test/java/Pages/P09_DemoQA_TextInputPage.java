@@ -3,8 +3,9 @@ package Pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Step;
 
-public class P09_External_DemoQAPage {
+public class P09_DemoQA_TextInputPage {
     private final Page page;
 
     // Các locator
@@ -20,7 +21,7 @@ public class P09_External_DemoQAPage {
     private final Locator outputBox;
 
     // =================== Constructor ===================
-    public P09_External_DemoQAPage(Page page) {
+    public P09_DemoQA_TextInputPage(Page page) {
         this.page = page;
 
         // input fields
@@ -38,7 +39,14 @@ public class P09_External_DemoQAPage {
         this.outputBox = page.locator("//div[@id='output']");
     }
 
+    @Step("Navigate to text box page")
+    public void navigateToPage() {
+        page.navigate("https://demoqa.com/text-box");
+
+    }
     // =================== Actions ===================
+
+    @Step("Fill all fields")
     public void fillForm(String fullName, String email, String currentAddress, String permanentAddress) {
         inputFullName.fill(fullName);
         inputEmail.fill(email);
@@ -46,6 +54,7 @@ public class P09_External_DemoQAPage {
         inputPermanentAddress.fill(permanentAddress);
     }
 
+    @Step("Click submit button")
     public void submit() {
         btnSubmit.click();
     }

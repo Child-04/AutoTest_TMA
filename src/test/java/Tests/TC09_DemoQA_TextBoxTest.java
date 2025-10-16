@@ -1,42 +1,60 @@
 package Tests;
 
 import Base.BaseTest;
-import Pages.P09_External_DemoQAPage;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.WaitUntilState;
+import Pages.P09_DemoQA_TextInputPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static Data.TestData.*;
+
 public class TC09_DemoQA_TextBoxTest extends BaseTest {
-    private P09_External_DemoQAPage external_DemoQAPage;
+    private P09_DemoQA_TextInputPage external_DemoQAPage;
 
     @BeforeMethod
     public void openPage() {
-        page.navigate("https://demoqa.com/text-box",
-                new Page.NavigateOptions().setWaitUntil(WaitUntilState.LOAD));
 
-        external_DemoQAPage = new P09_External_DemoQAPage(page);
+        external_DemoQAPage = new P09_DemoQA_TextInputPage(page);
+        external_DemoQAPage.navigateToPage();
+        super.setup();
+        page.evaluate("setTimeout(function(){debugger;}, 3000);");
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
-    @Test(description = "Verify user input and output dynamically without hardcoding")
-    public void testTextBoxForm() {
-        // ===== Test data =====
-        String name = "Tuyet Nhi";
-        String email = "nhi@example.com";
-        String currentAddress = "123 Dương Thị Mười";
-        String permanentAddress = "234 An Dương Vương";
+    @Test(description = "Verify textarea supports newline but output displays single line")
+    public void testTextareaHandlesNewlineProperly() {
+        P09_DemoQA_TextInputPage textPage = new P09_DemoQA_TextInputPage(page);
+        textPage.navigateToPage();
 
-        // ===== Actions =====
-        external_DemoQAPage.fillForm(name, email, currentAddress, permanentAddress);
-        external_DemoQAPage.submit();
+        String fullName = NAME;
+        String email = EMAIL;
+        String currentAddress = CURRENT_ADDRESS;
+        String permanentAddress = PERMANENT_ADDRESS;
 
-        // ===== Verify =====
-        Assert.assertTrue(external_DemoQAPage.isOutputVisible(), "Output section is not visible!");
+        textPage.fillForm(fullName, email, currentAddress, permanentAddress);
+        textPage.submit();
 
-        Assert.assertEquals(external_DemoQAPage.getName(), name, "Full name mismatch!");
-        Assert.assertEquals(external_DemoQAPage.getEmail(), email, "Email mismatch!");
-        Assert.assertEquals(external_DemoQAPage.getCurrentAddress(), currentAddress, "Current address mismatch!");
-        Assert.assertEquals(external_DemoQAPage.getPermanentAddress(), permanentAddress, "Permanent address mismatch!");
+        // Verify output display
+        Assert.assertTrue(textPage.isOutputVisible(), "Output box should be visible");
+
+        // The printed result must not contain a newline character.
+        String currentOutput = textPage.getCurrentAddress();
+        String permanentOutput = textPage.getPermanentAddress();
+
+        System.out.println("Output Current Address: " + currentOutput);
+        System.out.println("Output Permanent Address: " + permanentOutput);
+
+        Assert.assertFalse(currentOutput.contains("\n") || currentOutput.contains("\r"),
+                "Current Address output should be single line");
+
+        Assert.assertFalse(permanentOutput.contains("\n") || permanentOutput.contains("\r"),
+                "Permanent Address output should be single line");
+
+        takeScreenshot("All information is match");
     }
+
 
 }
