@@ -3,7 +3,6 @@ package Base;
 import Utils.AllureCommandRunner;
 import Utils.ScreenshotUtil;
 import com.microsoft.playwright.*;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -54,7 +53,7 @@ public class BaseTest {
 
     @AfterSuite
     public void generateAllureReport() {
-        AllureCommandRunner.runCommand("allure generate --clean target/allure-results -o target/allure-report");
+        AllureCommandRunner.runCommand("allure generate  --single-file target/allure-results -o target/allure-report");
         System.out.println("Allure report generated successfully!");
     }
 

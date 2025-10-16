@@ -15,7 +15,8 @@
 <!--            <class name="Tests.TC11_JotForm_RadioTest"/>-->
 <!--            <class name="Tests.TC12_JotForm_SelectTest"/>-->
 <!--            <class name="Tests.TC13_Jquery_DatePickerTest"/>-->
-            <class name="Tests.TC14_UploadFileTest"/>
+<!--            <class name="Tests.TC14_UploadFileTest"/>-->
+            <class name="Tests.TC15_DownFileTest"/>
         </classes>
     </test>
 </suite>
