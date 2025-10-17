@@ -38,8 +38,8 @@ public class P13_Jquery_DatePickerPage {
         page.navigate("https://jqueryui.com/datepicker/");
     }
 
-    @Step("Fill date")
-    public void fillDate(String date) {
+    @Step("Type date")
+    public void typeDate(String date) {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -111,7 +111,7 @@ public class P13_Jquery_DatePickerPage {
 
         clickDateInput();
         //Fill in the input
-        fillDate(formattedDate);
+        typeDate(formattedDate);
 
         selectedDate.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(20*1000));
         // Locator for selected date

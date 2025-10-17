@@ -1,6 +1,7 @@
 package Pages.OrangeHRM;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import io.qameta.allure.*;
 
 import static Utils.TestData.*;
@@ -18,6 +19,7 @@ public class P01_LoginPage {
     private final Locator invalidErrorMessage;
     private final Locator usernameRequiredMessage;
     private final Locator passwordRequiredMessage;
+    private final Locator dashboard;
 
     // Constructor
     public P01_LoginPage(Page page) {
@@ -28,6 +30,7 @@ public class P01_LoginPage {
         this.invalidErrorMessage = page.locator("//p[contains(normalize-space(), 'Invalid credentials')]");
         this.usernameRequiredMessage = page.locator("//input[@name='username']/following::span").first();
         this.passwordRequiredMessage = page.locator("//input[@name='password']/following::span").first();
+        this.dashboard = page.locator("//h6[text() = 'Dashboard']");
     }
 
     @Step("Step: Open login page")
@@ -42,8 +45,8 @@ public class P01_LoginPage {
         passwordField.fill(VALID_PASSWORD);
         loginButton.click();
         page.waitForURL("**/dashboard/index");
+        dashboard.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
-
 
 
     @Step("Step: Login with username: {username}, password: {password}")
@@ -59,6 +62,7 @@ public class P01_LoginPage {
     public boolean isLoginSuccess() {
         page.waitForURL("**/dashboard/index");
         return page.url().contains("/dashboard/index");
+
     }
 
     @Step("Get invalid login error")

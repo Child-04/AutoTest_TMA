@@ -52,7 +52,7 @@ public class TC01_LoginTest extends BaseTest {
         takeScreenshot("EmptyCredentials");
     }
 
-    @Test(description = "Verify login with valid credentials")
+    @Test(description = "Verify login successful")
     @Description("User should be able to login with correct username and password")
     public void testLoginSuccess() {
         loginPage.loginAs(VALID_USERNAME , VALID_PASSWORD);
