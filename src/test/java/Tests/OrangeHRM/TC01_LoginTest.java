@@ -52,12 +52,27 @@ public class TC01_LoginTest extends BaseTest {
         takeScreenshot("EmptyCredentials");
     }
 
-    @Test(description = "Verify login successful")
-    @Description("User should be able to login with correct username and password")
-    public void testLoginSuccess() {
-        loginPage.loginAs(VALID_USERNAME , VALID_PASSWORD);
-        Assert.assertTrue(loginPage.isLoginSuccess(), "Login failed!");
-        takeScreenshot("LoginSuccess");
+//    @Test(description = "Verify login successful")
+//    @Description("User should be able to login with correct username and password")
+//    public void testLoginSuccess() {
+//        loginPage.loginAs(VALID_USERNAME , VALID_PASSWORD);
+//        Assert.assertTrue(loginPage.isLoginSuccess(), "Login failed!");
+//        takeScreenshot("LoginSuccess");
+//      loginPage.openLoginPage();
+//    }
+
+    @Test(dataProvider = "credentialCsvProvider", dataProviderClass = Utils.DataProviders.class,
+            description = "Login với nhiều tài khoản được lấy từ file CSV")
+    public void loginWithCsvUsers(String username, String password) {
+        System.out.println("🔐 Đang test login với: " + username);
+
+        loginPage.loginAs(username, password);
+
+        boolean success = loginPage.isLoginSuccess();
+        Assert.assertTrue(success, "❌ Login failed for user: " + username);
+
+        System.out.println("✅ Login thành công với user: " + username);
+        loginPage.openLoginPage();
     }
 
 }

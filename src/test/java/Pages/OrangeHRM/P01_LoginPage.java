@@ -20,6 +20,8 @@ public class P01_LoginPage {
     private final Locator usernameRequiredMessage;
     private final Locator passwordRequiredMessage;
     private final Locator dashboard;
+    private final Locator logoutDropdown;
+    private final Locator logoutBTN;
 
     // Constructor
     public P01_LoginPage(Page page) {
@@ -31,6 +33,9 @@ public class P01_LoginPage {
         this.usernameRequiredMessage = page.locator("//input[@name='username']/following::span").first();
         this.passwordRequiredMessage = page.locator("//input[@name='password']/following::span").first();
         this.dashboard = page.locator("//h6[text() = 'Dashboard']");
+        this.logoutDropdown = page.locator("//span[@class='oxd-userdropdown-tab']");
+        this.logoutBTN = page.locator("//ul[@class='oxd-dropdown-menu']/li/a[text()='Logout']");
+
     }
 
     @Step("Step: Open login page")
@@ -89,6 +94,13 @@ public class P01_LoginPage {
         String passError = getPasswordRequiredError();
         assert userError.equals("Required") : "Username error not matched";
         assert passError.equals("Required") : "Password error not matched";
+    }
+
+    @Step("Verify log out successful")
+    public void logOut() {
+        logoutDropdown.click();
+        logoutBTN.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        logoutBTN.click();
     }
 
 

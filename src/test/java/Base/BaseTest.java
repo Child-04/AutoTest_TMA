@@ -35,16 +35,16 @@ public class BaseTest {
         screenshotUtil.takeStepScreenshot(testName);
     }
 
-//    @AfterMethod
-//    public void tearDown(ITestResult result) {
-//        String testName = result.getMethod().getMethodName();
-//        boolean isSuccess = result.isSuccess();
-//
-//        // Chụp screenshot khi FAIL
-//        if (!isSuccess) {
-//            screenshotUtil.takeScreenshot(testName + "_FAILED", false);
-//        }
-//    }
+    @AfterMethod
+    public void tearDown(ITestResult result) {
+        String testName = result.getMethod().getMethodName();
+        boolean isSuccess = result.isSuccess();
+
+        // Chụp screenshot khi FAIL
+        if (!isSuccess) {
+            screenshotUtil.takeScreenshot(testName + "_FAILED", false);
+        }
+    }
 
     @AfterClass
     public void teardown() {

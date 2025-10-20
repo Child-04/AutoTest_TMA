@@ -18,7 +18,7 @@
 <!--            <class name="Tests.TC14_UploadFileTest"/>-->
 <!--            <class name="Tests.TC15_DownFileTest"/>-->
 <!--            <class name="Tests.TC16_Herokuapp_DrapanDropTest"/>-->
-            <class name="Tests.OrangeHRM.TC16_UserLifecycleTests"></class>
+            <class name="Tests.OrangeHRM.TC17_UserLifecycleTests"></class>
         </classes>
     </test>
 </suite>
