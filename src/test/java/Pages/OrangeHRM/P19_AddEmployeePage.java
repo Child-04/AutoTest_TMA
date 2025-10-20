@@ -1,0 +1,85 @@
+package Pages.OrangeHRM;
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class P19_AddEmployeePage {
+    private Page page;
+
+    private final Locator inputFirstName;
+    private final Locator inputMiddleName;
+    private final Locator inputLastName;
+    private final Locator inputEmpyeeId;
+    private final Locator btnLoginDetails;
+    private final Locator inputUsername;
+    private final Locator inputPassword;
+    private final Locator inputConfirmPassword;
+    private final Locator btnSave;
+    private final Locator toastSuccessfully;
+
+
+    private static final Logger log = LoggerFactory.getLogger(P19_AddEmployeePage.class);
+    public P19_AddEmployeePage(Page page){
+        this.page = page;
+        this.inputFirstName = page.locator("//div[contains(@class,'oxd-input-group')]/descendant::input[@name='firstName']");
+        this.inputMiddleName = page.locator("//div[contains(@class,'oxd-input-group')]/descendant::input[@name='middleName']");
+        this.inputLastName = page.locator("//div[contains(@class,'oxd-input-group')]/descendant::input[@name='lastName']");
+        this.inputEmpyeeId = page.locator("//label[contains(@class,'oxd-label') and contains(normalize-space(text()),'Employee Id')]/parent::div/following-sibling::div/input");
+        this.btnLoginDetails = page.locator("//div[contains(@class,'oxd-switch-wrapper')]/descendant::span[contains(@class,'oxd-switch-input')]");
+        this.inputUsername = page.locator("//label[contains(@class,'oxd-label') and contains(normalize-space(text()),'Username')]/parent::div/following-sibling::div/input");
+        this.inputPassword = page.locator("//label[contains(@class,'oxd-label') and normalize-space(text())='Password']/parent::div/following-sibling::div/input");
+        this.inputConfirmPassword = page.locator("//label[contains(@class,'oxd-label') and contains(normalize-space(text()),'Confirm Password')]/parent::div/following-sibling::div/input");
+        this.btnSave = page.locator("//div[contains(@class,'oxd-form-actions')]/descendant::button[normalize-space(.)='Save']");
+        this.toastSuccessfully = page.locator("//div[contains(@class,'oxd-toast-container')]/descendant::p[contains(@class,'oxd-toast-content-text') and contains(normalize-space(.),'Successfully')]");
+
+    }
+
+
+    @Step("Input Employee information")
+    @Description("FirstName: firstName, LastName: lastName, ID: employeeId")
+    public void addEmployee(String firstName, String middleName ,String lastName, String employeeId){
+        inputFirstName.fill(firstName);
+        inputMiddleName.fill(middleName);
+        inputLastName.fill(lastName);
+        inputEmpyeeId.fill(employeeId);
+    }
+
+    @Step("Input Login Account Details:")
+    @Description("Username: {userName}, Password: {passWord}, Confirm password: {confirmPassWord}")
+    public void addDetailsUser(String userName, String passWord, String confirmPassWord){
+        inputConfirmPassword.waitFor();
+        inputUsername.fill(userName);
+        inputPassword.fill(passWord);
+        inputConfirmPassword.fill(confirmPassWord);
+    }
+
+    @Step("Enable 'Create Login Details' if not already enabled")
+    public void clickCreateLoginDetailsButton(){
+        if (!btnLoginDetails.isChecked()) {
+            btnLoginDetails.click();
+            log.info("Switched ON 'Create Login Details'");
+        } else {
+            log.info("Create Login Details is already ON, no action needed");
+        }
+    }
+
+    @Step("Click Save button")
+    public void clickSaveButton(){
+        btnSave.click();
+    }
+
+    @Step("Create Successfully")
+    public boolean isCreateSuccessfully(){
+        try{
+            toastSuccessfully.waitFor();
+            return toastSuccessfully.isVisible();
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+}
