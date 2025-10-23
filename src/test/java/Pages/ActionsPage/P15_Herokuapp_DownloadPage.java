@@ -1,19 +1,18 @@
-package Pages;
+package Pages.ActionsPage;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Download;
 import io.qameta.allure.Step;
-import org.testng.Assert;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class P15_Herokuapp_DownFilePage {
+public class P15_Herokuapp_DownloadPage {
     private final Page page;
     private final String downloadDir = "src/test/resources/files";
 
-    public P15_Herokuapp_DownFilePage(Page page) {
+    public P15_Herokuapp_DownloadPage(Page page) {
         this.page = page;
     }
 
@@ -23,28 +22,27 @@ public class P15_Herokuapp_DownFilePage {
     }
 
     @Step("Download file: {fileName}")
-    public void downloadFile(String fileName) {
+    public Path downloadFile(String fileName) {
         Download download = page.waitForDownload(() -> {
             page.locator(String.format("//a[text()='%s']", fileName)).click();
         });
 
-        // Save file as test/resources/files
+        // Save file to directory
         Path savePath = Paths.get(downloadDir, fileName);
         download.saveAs(savePath);
-        Assert.assertTrue(Files.exists(savePath), "File does not exist after download!");
+
+        return savePath; // 🔹 trả về đường dẫn file để test class tự kiểm tra
     }
 
-    @Step("Verify file '{fileName}' tồn tại trong thư mục download")
-    public void verifyFileDownloaded(String fileName) {
-        Path filePath = Paths.get(downloadDir, fileName);
-        Assert.assertTrue(Files.exists(filePath),
-                String.format("File '%s' not yet downloaded!", fileName));
+    @Step("Get file path in download folder")
+    public Path getDownloadedFilePath(String fileName) {
+        return Paths.get(downloadDir, fileName);
     }
 
     @Step("Delete file '{fileName}' after check")
     public void deleteDownloadedFile(String fileName) {
         try {
-            Path filePath = Paths.get(downloadDir, fileName);
+            Path filePath = getDownloadedFilePath(fileName);
             if (Files.exists(filePath)) {
                 Files.delete(filePath);
             }

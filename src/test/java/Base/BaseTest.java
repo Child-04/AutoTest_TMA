@@ -50,14 +50,15 @@ public class BaseTest {
     }
 
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void teardown() {
-        if (page != null) page.context().browser().close();
-    }
-
-    @AfterSuite
-    public void generateAllureReport() {
-        AllureCommandRunner.runCommand("allure generate  --single-file target/allure-results -o target/allure-report");
+        try {
+            if (context != null) context.close();
+            if (browser != null) browser.close();
+            if (playwright != null) playwright.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -1,7 +1,7 @@
-package Tests;
+package Tests.ActionsTest;
 
 import Base.BaseTest;
-import Pages.P09_DemoQA_TextInputPage;
+import Pages.ActionsPage.P09_DemoQA_TextInputPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

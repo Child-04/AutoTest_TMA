@@ -1,24 +1,30 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Playwright Suite">
+    <listeners>
+        <listener class-name="Listeners.TestListener"/>
+    </listeners>
+
     <test name="Playwright Tests">
         <classes>
-<!--            <class name="Tests.OrangeHRM.TC01_LoginTest"/>-->
+            <class name="Tests.OrangeHRM.TC01_LoginTest"/>
 <!--            <class name="Tests.OrangeHRM.TC02_AdminTable_GetUserTest"/>-->
-            <class name="Tests.OrangeHRM.TC03_AdminTable01_SortingTest"/>
+<!--            <class name="Tests.OrangeHRM.TC03_AdminTable01_SortingTest"/>-->
 <!--            <class name="Tests.OrangeHRM.TC04_AdminTable02_SortingTest"/>-->
 <!--            <class name="Tests.OrangeHRM.TC05_Admin_SearchTest"/>-->
-<!--            <class name="Tests.TC06_PaginationTest"/>-->
-<!--            <class name="Tests.TC07_TooltipTest"></class>-->
-<!--            <class name="Tests.TC08_SortDateTest"/>-->
-<!--            <class name="Tests.TC09_DemoQA_TextBoxTest"/>-->
-<!--            <class name="Tests.TC10_CheckboxesTest"/>-->
-<!--            <class name="Tests.TC11_JotForm_RadioTest"/>-->
-<!--            <class name="Tests.TC12_JotForm_SelectTest"/>-->
-<!--            <class name="Tests.TC13_Jquery_DatePickerTest"/>-->
-<!--            <class name="Tests.TC14_UploadFileTest"/>-->
-<!--            <class name="Tests.TC15_DownFileTest"/>-->
+<!--            <class name="Tests.ExternalTest.TC06_PaginationTest"/>-->
+<!--            <class name="Tests.ActionsTest.TC07_TooltipTest"></class>-->
+<!--            <class name="Tests.ExternalTest.TC08_SortDateTest"/>-->
+<!--            <class name="Tests.ActionsTest.TC09_DemoQA_TextBoxTest"/>-->
+<!--            <class name="Tests.ActionsTest.TC10_CheckboxesTest"/>-->
+<!--            <class name="Tests.ActionsTest.TC11_JotForm_RadioTest"/>-->
+<!--            <class name="Tests.ActionsTest.TC12_JotForm_SelectTest"/>-->
+<!--            <class name="Tests.ExternalTest.TC13_Jquery_DatePickerTest"/>-->
+<!--            <class name="Tests.ActionsTest.TC14_UploadFileTest"/>-->
+<!--            <class name="Tests.ActionsTest.TC15_DownFileTest"/>-->
 <!--            <class name="Tests.TC16_Herokuapp_DrapanDropTest"/>-->
 <!--            <class name="Tests.OrangeHRM.TC17_UserLifecycleTests"></class>-->
         </classes>
     </test>
+
+
 </suite>

@@ -41,30 +41,32 @@ public class ScreenshotUtil {
     }
 
     @Step("Take step screenshot: {stepName}")
-    public void takeStepScreenshot(String stepName) {
+    public byte[] takeStepScreenshot(String stepName) {
         try {
             waitForPageStable();
 
             byte[] screenshot = page.screenshot(
                     new Page.ScreenshotOptions().setFullPage(true)
             );
+
+            // vẫn attach trực tiếp vào Allure như cũ
             Allure.addAttachment(stepName, "image/png",
                     new ByteArrayInputStream(screenshot), "png");
+
+            return screenshot;
         } catch (Exception e) {
             System.err.println("Failed to take step screenshot: " + e.getMessage());
+            return new byte[0]; // tránh null pointer
         }
     }
 
-    /**
-     * Chờ trang ổn định mà không dùng Page.LoadState.
-     * Kiểm tra document.readyState hoặc chờ ngắn để đảm bảo trang hiển thị hoàn chỉnh.
-     */
+
     private void waitForPageStable() {
         try {
-            // Chờ document.readyState === "complete"
+            // wait document.readyState === "complete"
             page.waitForFunction("document.readyState === 'complete'");
 
-            // Chờ thêm 0.5 giây để các animation hoặc render nhỏ hoàn tất
+            // wait more 500
             page.waitForTimeout(500);
         } catch (Exception e) {
             System.err.println("Warning: Could not fully verify page stability - " + e.getMessage());

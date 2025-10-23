@@ -1,4 +1,4 @@
-package Pages;
+package Pages.ActionsPage;
 
 import Utils.ScreenshotUtil;
 import com.microsoft.playwright.Locator;
@@ -6,7 +6,6 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.SelectOption;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import io.qameta.allure.Step;
-import org.testng.Assert;
 
 import java.util.List;
 import java.util.Random;
@@ -55,46 +54,31 @@ public class P12_JotForm_SelectPage {
         return genderDropdown.inputValue();
     }
 
-    @Step("Verify dropdown '{dropdownName}' hiển thị đúng danh sách tùy chọn")
-    public void verifyDropdownOptions( List<String> expectedOptions) {
-
-        List<String> actualOptions = genderDropdown.locator("option").allTextContents()
+    @Step("Get all options in Gender dropdown")
+    public List<String> getDropdownOptions() {
+        return genderDropdown.locator("option").allTextContents()
                 .stream()
                 .map(String::trim)
                 .toList();
-
-        Assert.assertEquals(
-                actualOptions,
-                expectedOptions,
-                "Dropdown is not displayed correctly!"
-        );
     }
 
 
     // ----------------------------------------------------------------------
 
-    @Step("Select random option for {fieldName} dropdown and take screenshot")
-    public void selectRandomOption(Locator dropdown, String fieldName) {
+    @Step("Select random option from {fieldName} dropdown")
+    public String selectRandomOption(Locator dropdown, String fieldName) {
         dropdown.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 
-        // Lấy tất cả các giá trị trong dropdown (trừ option rỗng)
         List<String> options = dropdown.locator("option").allTextContents()
                 .stream()
                 .map(String::trim)
                 .filter(opt -> !opt.isEmpty())
                 .collect(Collectors.toList());
 
-        // Random 1 option
-        Random rand = new Random();
-        String randomOption = options.get(rand.nextInt(options.size()));
-
-        // Chọn giá trị
+        String randomOption = options.get(new Random().nextInt(options.size()));
         dropdown.selectOption(new SelectOption().setLabel(randomOption));
 
-        // Kiểm tra kết quả
-        Assert.assertEquals(dropdown.inputValue(), randomOption,
-                fieldName + " dropdown: Expected value not matched after selection.");
-
+        return randomOption;
     }
 
     @Step("Select random Day")

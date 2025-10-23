@@ -1,10 +1,9 @@
-package Pages;
+package Pages.ActionsPage;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import io.qameta.allure.Step;
-import org.testng.Assert;
 
 import java.nio.file.Paths;
 
@@ -36,15 +35,11 @@ public class P14_External_UploadFilePage {
         uploadBtn.click();
     }
 
-    @Step("Verify thông báo 'File Uploaded!' hiển thị sau khi upload")
-    public void verifyUploadedFile(String expectedFileName) {
+    @Step("Get upload notification text after uploading file")
+    public String getUploadNotificationText() {
         resultText.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        String actualText = resultText.textContent().trim();
-        Assert.assertEquals(
-                actualText,
-                "File Uploaded!",
-                "Notification after upload is incorrect. Reality: " + actualText
-        );
+        return resultText.textContent().trim();
     }
+
 
 }

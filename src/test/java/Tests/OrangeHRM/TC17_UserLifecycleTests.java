@@ -79,10 +79,9 @@ public class TC17_UserLifecycleTests extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void createEmployeeAndUser(){
         createEmployee();
-        takeScreenshot("createEmployeeAndUser");
+        takeScreenshot("create Employee And User");
 
         createUser(3);
-        takeScreenshot("createUser");
         log.info("======== Test Login ========");
         // 2. Chạy test login ngay lập tức sau khi tạo user
         loginWithCreatedUsers();
@@ -102,6 +101,7 @@ public class TC17_UserLifecycleTests extends BaseTest {
         pimPage.clickPIMSideBarButton();
         pimPage.navigateToAddEmployeePage();
         addEmployeePage.addEmployee(uniqueFirstName,uniqueMiddleName,uniqueLastName,uniqueUserId);
+        takeScreenshot("create Employee");
         addEmployeePage.clickSaveButton();
         //addEmployeePage.clickCreateLoginDetailsButton();
         //addEmployeePage.addDetailsUser(uniqueUserName, AccountData.EMPLOYEEPASSWORD, AccountData.EMPLOYEEPASSWORD);
@@ -131,6 +131,7 @@ public class TC17_UserLifecycleTests extends BaseTest {
             addUserPage.selectUserRole();
             addUserPage.selectStatus();
             addUserPage.inputUserInfo(uniqueFirstName, uniqueFullName, newUserName, password, password);
+            takeScreenshot("add user " + i + " of " + count + " ----");
             addUserPage.clickSaveButton();
 
             // 4 Verify user creation is successful
@@ -144,6 +145,8 @@ public class TC17_UserLifecycleTests extends BaseTest {
             Assert.assertTrue(userManagementPage.isUserPresentInTable(newUserName),
                     "User search result should return exactly one record");
 
+            takeScreenshot("search user " + i + " of " + count + " ----");
+
             // 6 Save user information to CSV file
             try {
                 CredentialUtils.appendCredentialCsv(
@@ -155,6 +158,7 @@ public class TC17_UserLifecycleTests extends BaseTest {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
 
             // 7 Return to the Admin page to prepare to create the next user
             userManagementPage.clickAdminSideBarButton();
@@ -186,7 +190,6 @@ public class TC17_UserLifecycleTests extends BaseTest {
 
                 // 2. Perform login
                 loginPage.loginAs(username, password);
-                takeScreenshot("login User {username}");
 
                 // 3. Check login success
                 try {
@@ -198,7 +201,7 @@ public class TC17_UserLifecycleTests extends BaseTest {
                     log.error("Login FAILED for user: " + username + ". Please check your credentials or logical login information again.", e);
                     Assert.fail("Login FAILED for user: " + username);
                 }
-                takeScreenshot("login successful User {username}");
+                takeScreenshot("login successful User : " + username);
             }
             log.info("======== Finished Login Test for all created users ========");
 
