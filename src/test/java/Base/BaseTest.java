@@ -2,6 +2,7 @@ package Base;
 
 import Utils.AllureCommandRunner;
 import Utils.ScreenshotUtil;
+import Utils.TraceUtil;
 import com.microsoft.playwright.*;
 import io.qameta.allure.Step;
 import org.testng.ITestResult;
@@ -23,6 +24,7 @@ public class BaseTest {
         context = browser.newContext();
         page = context.newPage();
         screenshotUtil = new ScreenshotUtil(page);
+        TraceUtil.startTrace(context);
 
     }
 
@@ -36,15 +38,17 @@ public class BaseTest {
     }
 
     @AfterMethod
-    public void tearDown(ITestResult result) {
+    public void afterEachTest(ITestResult result) {
         String testName = result.getMethod().getMethodName();
-        boolean isSuccess = result.isSuccess();
+        boolean isFailed = !result.isSuccess();
 
-        // Chụp screenshot khi FAIL
-        if (!isSuccess) {
+        if (isFailed) {
             screenshotUtil.takeScreenshot(testName + "_FAILED", false);
         }
+
+        TraceUtil.stopTrace(context, testName, isFailed);
     }
+
 
     @AfterClass
     public void teardown() {
@@ -54,7 +58,6 @@ public class BaseTest {
     @AfterSuite
     public void generateAllureReport() {
         AllureCommandRunner.runCommand("allure generate  --single-file target/allure-results -o target/allure-report");
-        System.out.println("Allure report generated successfully!");
     }
 
 

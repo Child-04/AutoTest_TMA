@@ -4,7 +4,7 @@
         <classes>
 <!--            <class name="Tests.OrangeHRM.TC01_LoginTest"/>-->
 <!--            <class name="Tests.OrangeHRM.TC02_AdminTable_GetUserTest"/>-->
-<!--            <class name="Tests.OrangeHRM.TC03_AdminTable01_SortingTest"/>-->
+            <class name="Tests.OrangeHRM.TC03_AdminTable01_SortingTest"/>
 <!--            <class name="Tests.OrangeHRM.TC04_AdminTable02_SortingTest"/>-->
 <!--            <class name="Tests.OrangeHRM.TC05_Admin_SearchTest"/>-->
 <!--            <class name="Tests.TC06_PaginationTest"/>-->
@@ -18,7 +18,7 @@
 <!--            <class name="Tests.TC14_UploadFileTest"/>-->
 <!--            <class name="Tests.TC15_DownFileTest"/>-->
 <!--            <class name="Tests.TC16_Herokuapp_DrapanDropTest"/>-->
-            <class name="Tests.OrangeHRM.TC17_UserLifecycleTests"></class>
+<!--            <class name="Tests.OrangeHRM.TC17_UserLifecycleTests"></class>-->
         </classes>
     </test>
 </suite>
