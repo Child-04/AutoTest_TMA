@@ -1,6 +1,6 @@
 package Base;
 
-import Utils.ScreenshotUtil;
+import Utils.utils.ScreenshotUtil;
 import Utils.reporting.TraceUtil;
 import com.microsoft.playwright.*;
 import io.qameta.allure.Step;

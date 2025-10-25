@@ -10,6 +10,7 @@ public class TestData {
     // Base URL
     public static final String BASE_URL = "https://opensource-demo.orangehrmlive.com";
     public static Path BASE_PATH = Paths.get("src/test/resources/files");
+    public static Path DOWNLOAD_PATH = Paths.get("src/test/resources/files/downloadFile");
 
     // Common credentials
     public static final String VALID_USERNAME = "Admin";

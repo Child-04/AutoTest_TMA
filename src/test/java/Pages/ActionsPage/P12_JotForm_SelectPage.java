@@ -1,6 +1,6 @@
 package Pages.ActionsPage;
 
-import Utils.ScreenshotUtil;
+import Utils.utils.ScreenshotUtil;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.SelectOption;
