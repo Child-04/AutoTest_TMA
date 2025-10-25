@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 public class P15_Herokuapp_DownloadPage {
     private final Page page;
-    private final String downloadDir = "src/test/resources/files";
+    private final String downloadDir = "src/test/resources/files/downloadFile";
 
     public P15_Herokuapp_DownloadPage(Page page) {
         this.page = page;
@@ -31,7 +31,7 @@ public class P15_Herokuapp_DownloadPage {
         Path savePath = Paths.get(downloadDir, fileName);
         download.saveAs(savePath);
 
-        return savePath; // 🔹 trả về đường dẫn file để test class tự kiểm tra
+        return savePath;
     }
 
     @Step("Get file path in download folder")

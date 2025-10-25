@@ -3,7 +3,7 @@ package Tests.ActionsTest;
 import Base.BaseTest;
 import Pages.ActionsPage.P14_External_UploadFilePage;
 import Config.FileUploadConfig;
-import Utils.TestData;
+import Utils.data.TestData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;

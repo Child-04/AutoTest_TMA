@@ -10,7 +10,7 @@ import java.nio.file.Path;
 
 public class TC15_DownFileTest extends BaseTest {
 
-    @Test(description = "Verify download file thành công và tồn tại trong thư mục download")
+    @Test(description = "Verify download file successful")
     public void testDownloadFile() {
 
         P15_Herokuapp_DownloadPage downloadPage = new P15_Herokuapp_DownloadPage(page);
@@ -19,7 +19,7 @@ public class TC15_DownFileTest extends BaseTest {
         downloadPage.navigateToDownloadPage();
 
         // Step 2: Select file to download
-        String fileName = "test_upload.txt";
+        String fileName = "sample.pdf";
 
         Path downloadedFile = downloadPage.downloadFile(fileName);
         takeScreenshot("Download_File_Success");

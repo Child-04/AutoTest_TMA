@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static Utils.TestData.*;
+import static Utils.data.TestData.*;
 
 public class TC03_AdminTable01_SortingTest extends BaseTest {
 

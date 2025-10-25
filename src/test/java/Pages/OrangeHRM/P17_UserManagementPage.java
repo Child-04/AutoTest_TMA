@@ -7,11 +7,11 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 import io.qameta.allure.Step;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import Utils.SystemUser;
+import Utils.data.SystemUser;
 
 import java.util.*;
 
-import static Utils.TestData.*;
+import static Utils.data.TestData.*;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 

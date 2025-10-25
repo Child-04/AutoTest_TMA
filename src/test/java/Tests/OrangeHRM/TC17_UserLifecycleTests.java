@@ -2,27 +2,26 @@ package Tests.OrangeHRM;
 
 import Base.BaseTest;
 import Pages.OrangeHRM.*;
-import Utils.CredentialUtils;
-import Utils.DataProviders;
-import Utils.SystemUser;
+import Utils.data.CredentialUtils;
+import Utils.data.CredentialWriter;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.TimeoutError;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import jdk.jfr.Description;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import Utils.TestData;
+import Utils.data.TestData;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import static Utils.TestData.*;
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.Assert.assertNotNull;
+import static Utils.data.TestData.*;
 
 
 public class TC17_UserLifecycleTests extends BaseTest {
@@ -77,7 +76,7 @@ public class TC17_UserLifecycleTests extends BaseTest {
 
     @Test(description = "Test flow: Create Employee & User")
     @Severity(SeverityLevel.NORMAL)
-    public void createEmployeeAndUser(){
+    public void createEmployeeAndUser() throws IOException {
         createEmployee();
         takeScreenshot("create Employee And User");
 
@@ -110,7 +109,7 @@ public class TC17_UserLifecycleTests extends BaseTest {
 
     }
 
-    private void createUser(int count) {
+    private void createUser(int count) throws IOException {
         log.info("======== Create " + count + " users ========");
 
         // Open Admin Page
@@ -148,16 +147,7 @@ public class TC17_UserLifecycleTests extends BaseTest {
             takeScreenshot("search user " + i + " of " + count + " ----");
 
             // 6 Save user information to CSV file
-            try {
-                CredentialUtils.appendCredentialCsv(
-                        Paths.get("src/test/resources/files/users.csv"),
-                        newUserName,
-                        password
-                );
-                System.out.println("Saved user " + newUserName + " to CSV");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            CredentialWriter.appendCredentialCsv("users.csv", newUserName, password);
 
 
             // 7 Return to the Admin page to prepare to create the next user
@@ -175,7 +165,7 @@ public class TC17_UserLifecycleTests extends BaseTest {
     private void loginWithCreatedUsers() {
         try {
             // Read data from users.csv
-            var credentials = CredentialUtils.readCredentialsCsv(Paths.get("src/test/resources/files/users.csv"));
+            var credentials = CredentialUtils.readCredentialsCsv(CREDENTIALS_FILE_NAME);
 
             Assert.assertFalse(credentials.isEmpty(), "CSV file users.csv cannot be empty.");
 
@@ -211,42 +201,52 @@ public class TC17_UserLifecycleTests extends BaseTest {
         }
     }
 
+    private void deleteUser(){
+        log.info("======== Delete user ========");
+        userManagementPage.clickAdminSideBarButton();
+        userManagementPage.searchUsername(uniqueUserName);
+        userManagementPage.waitForSearchResult();
+        userManagementPage.deleteUser();
+        Assert.assertTrue(userManagementPage.isDeleteSuccessfully(), "Delete fail");
+        log.info("Delete user Successfully");
 
+        log.info("======== Check user ========");
+        userManagementPage.searchUsername(uniqueUserName);
 
-//    private void deleteUser(){
-//        log.info("======== Delete user ========");
-//        userManagementPage.clickAdminSideBarButton();
-//        userManagementPage.searchUsername(uniqueUserName);
-//        userManagementPage.waitForSearchResult();
-//        userManagementPage.deleteUser();
-//        Assert.assertTrue(userManagementPage.isDeleteSuccessfully(), "Delete fail");
-//        log.info("Delete user Successfully");
-//
-//        log.info("======== Check user ========");
-//        userManagementPage.searchUsername(uniqueUserName);
-//
-//        Assert.assertTrue(userManagementPage.isUsernameInvisibleAfterDelete(), "Notification No Record Found must be visible");
-//        userManagementPage.waitForSearchResult();
-//        Assert.assertTrue(userManagementPage.isUserNotVisibleInTable(uniqueUserName), "User should not be visible in table after deletion");
-//        log.info("No record is found");
-//    }
-//
-//    private void deleteEmployee(){
-//        log.info("======== Delete employee ========");
-//        pimPage.clickPIMSideBarButton();
-//        pimPage.navigateToEmployeeListPage();
-//        pimPage.searchEmployeeByFirstname(uniqueFirstName,uniqueFullName);
-//        pimPage.waitForSearchResult();
-//        pimPage.deleteEmployee();
-//        Assert.assertTrue(pimPage.isDeleteSuccessfully(), "Delete fail");
-//        log.info("Delete Employee Successfully");
-//
-//        log.info("======== Check employee ========");
-//        pimPage.searchEmployeeByFirstname(uniqueFirstName,uniqueFullName);
-//        Assert.assertTrue(pimPage.isEmployeeInvisibleAfterDelete(), "Notification No Record Found must be visible");
-//        pimPage.waitForSearchResult();
-//        Assert.assertTrue(pimPage.isEmployeeNotVisibleInTable(uniqueFullName), "Employee should not be visible in table after deletion");
-//
-//        log.info("No record is found");
-//    }
+        Assert.assertTrue(userManagementPage.isUsernameInvisibleAfterDelete(), "Notification No Record Found must be visible");
+        userManagementPage.waitForSearchResult();
+        Assert.assertTrue(userManagementPage.isUserNotVisibleInTable(uniqueUserName), "User should not be visible in table after deletion");
+        log.info("No record is found");
+    }
+
+    private void deleteEmployee(){
+        log.info("======== Delete employee ========");
+        pimPage.clickPIMSideBarButton();
+        pimPage.navigateToEmployeeListPage();
+        pimPage.searchEmployeeByFirstname(uniqueFirstName,uniqueFullName);
+        pimPage.waitForSearchResult();
+        pimPage.deleteEmployee();
+        Assert.assertTrue(pimPage.isDeleteSuccessfully(), "Delete fail");
+        log.info("Delete Employee Successfully");
+
+        log.info("======== Check employee ========");
+        pimPage.searchEmployeeByFirstname(uniqueFirstName,uniqueFullName);
+        Assert.assertTrue(pimPage.isEmployeeInvisibleAfterDelete(), "Notification No Record Found must be visible");
+        pimPage.waitForSearchResult();
+        Assert.assertTrue(pimPage.isEmployeeNotVisibleInTable(uniqueFullName), "Employee should not be visible in table after deletion");
+
+        log.info("No record is found");
+    }
+
+    @AfterClass
+    public void cleanupTestData() {
+        log.info("======== Starting cleanup: clearing users.csv data ========");
+        try {
+            // Gọi phương thức clear mới để xóa data và giữ header
+            CredentialWriter.clearCredentialsCsv("users.csv");
+        } catch (IOException e) {
+            log.error("FATAL ERROR: Failed to clear data in users.csv. The file might contain residual test data.", e);
+        }
+        log.info("======== Cleanup finished ========");
+    }
 }

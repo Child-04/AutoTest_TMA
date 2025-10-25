@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static Utils.TestData.*;
+import static Utils.data.TestData.*;
 
 public class TC01_LoginTest extends BaseTest {
     private static final Logger log = LoggerFactory.getLogger(TC01_LoginTest.class);

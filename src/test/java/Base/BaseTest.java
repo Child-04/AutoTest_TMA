@@ -1,14 +1,11 @@
 package Base;
 
-import Utils.AllureCommandRunner;
 import Utils.ScreenshotUtil;
-import Utils.TraceUtil;
+import Utils.reporting.TraceUtil;
 import com.microsoft.playwright.*;
 import io.qameta.allure.Step;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-
-import java.io.ByteArrayInputStream;
 
 public class BaseTest {
     protected Playwright playwright;

@@ -4,7 +4,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import io.qameta.allure.*;
 
-import static Utils.TestData.*;
+import static Utils.data.TestData.*;
 
 
 @Epic("Authentication")
@@ -42,6 +42,11 @@ public class P01_LoginPage {
     public void openLoginPage() {
         page.navigate(BASE_URL);
         page.waitForLoadState();
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
     @Step("Step: Open OrangeHRM login page and login successfully")
     public void enterUserAccount() {
